@@ -5,11 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float movementSpeed = 5f;
-    public float rotationSpeed = 3f;
-    public float mouseSensitivity = 175f;
-
     private Camera playerCamera;
-    CharacterController characterController;
+    private CharacterController characterController;
 
     void Start()
     {

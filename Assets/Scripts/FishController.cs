@@ -7,9 +7,6 @@ public class FishController : MonoBehaviour
 
     public float fishValue = 100.0f;
 
-    public float moveSpeed = 1.0f;
-    public float rotateSpeed = 1.0f;
-
     public float minPauseDuration = 1.0f;
 
     public float minMoveDuration = 1.0f;
@@ -42,11 +39,10 @@ public class FishController : MonoBehaviour
                 float moveDuration = Random.Range(minMoveDuration, maxMoveDuration);
                 float elapsedTime = 0.0f;
                 Vector3 startPosition = transform.position;
-                Quaternion startRotation = transform.rotation;
+                transform.LookAt(targetPosition);
                 while (elapsedTime < moveDuration)
                 {
                     transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveDuration);
-                    transform.rotation = Quaternion.Slerp(startRotation, Quaternion.LookRotation(targetPosition - transform.position), elapsedTime / moveDuration);
                     elapsedTime += Time.deltaTime;
                     yield return null;
                 }
@@ -55,5 +51,11 @@ public class FishController : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isMoving = false;
+        StartCoroutine(Swim());
     }
 }

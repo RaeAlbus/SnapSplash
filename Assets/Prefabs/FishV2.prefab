@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8384709704801034709}
   m_Layer: 0
   m_Name: FishV2
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,8 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishValue: 100
-  moveSpeed: 1
-  rotateSpeed: 1
   minPauseDuration: 1
   minMoveDuration: 1
   maxMoveDuration: 5

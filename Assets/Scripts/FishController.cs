@@ -7,7 +7,7 @@ public class FishController : MonoBehaviour
 
     public float fishValue = 100.0f;
 
-    public float minPauseDuration = 1.0f;
+    public float minPauseDuration = 5.0f;
 
     public float minMoveDuration = 1.0f;
     public float maxMoveDuration = 5.0f;
@@ -35,7 +35,7 @@ public class FishController : MonoBehaviour
             {
                 isMoving = true;
                 yield return new WaitForSeconds(minPauseDuration);
-                targetPosition = new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f));
+                targetPosition = new Vector3(transform.position.x + Random.Range(-10.0f, 10.0f), transform.position.y, transform.position.z + Random.Range(-10.0f, 0.0f));
                 float moveDuration = Random.Range(minMoveDuration, maxMoveDuration);
                 float elapsedTime = 0.0f;
                 Vector3 startPosition = transform.position;

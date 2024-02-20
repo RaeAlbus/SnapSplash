@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class LevelManager : MonoBehaviour
     public int totalStorage = 16;
 
     // Amount of pics player is currently holding
-    private int storageLeft;
+    public static int storageLeft;
 
     // Maximum depth for this level
     public float maxDepth;
@@ -30,7 +31,9 @@ public class LevelManager : MonoBehaviour
     // References to UI Elements
     public Slider airUI;
     public Text storageUI;
+    public Text storageUICamera;
     public Text depthUI;
+    public Text successText;
 
     // Canvases: One for when camera is not equipped and one for when it is
     public Canvas playerCanvas;
@@ -41,6 +44,7 @@ public class LevelManager : MonoBehaviour
         UsePlayerUI();
         storageLeft = totalStorage;
         airLeft = totalAir;
+        successText.enabled = false;
     }
 
     void Update()
@@ -68,15 +72,16 @@ public class LevelManager : MonoBehaviour
         depthUI.text = "" + currentDepth;
         airUI.value = airLeft / totalAir;
         storageUI.text = "" + storageLeft;
+        storageUICamera.text = "" + storageLeft;
     }
 
-    void UseCameraUI()
+    public void UseCameraUI()
     {
         playerCanvas.gameObject.SetActive(false);
         cameraCanvas.gameObject.SetActive(true);
     }
 
-    void UsePlayerUI()
+    public void UsePlayerUI()
     {
         cameraCanvas.gameObject.SetActive(false);
         playerCanvas.gameObject.SetActive(true);
@@ -84,13 +89,28 @@ public class LevelManager : MonoBehaviour
 
     void LevelSuccess()
     {
-
         isLevelOver = true;
+        successText.enabled = true;
+        successText.text = "YOU BEAT THE LEVEL!";
+
+        // We only have one level so far so just reload level
+        Invoke("LoadCurrentLevel", 2);
     }
 
     void LevelLost()
     {
         isLevelOver = true;
+        successText.enabled = true;
+        successText.text = "YOU LOST";
+
+        // We only have one level so far so just reload level
+        Invoke("LoadCurrentLevel", 2);
+
+    }
+
+    void LoadCurrentLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
   

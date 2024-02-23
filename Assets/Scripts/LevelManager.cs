@@ -33,18 +33,19 @@ public class LevelManager : MonoBehaviour
     public Text storageUI;
     public Text storageUICamera;
     public Text depthUI;
-    public Text successText;
 
     // Canvases: One for when camera is not equipped and one for when it is
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
+
+    // Surface scene to load when player leaves the water
+    public string surfaceScene;
 
     void Start()
     {
         UsePlayerUI();
         storageLeft = totalStorage;
         airLeft = totalAir;
-        successText.enabled = false;
     }
 
     void Update()
@@ -90,27 +91,23 @@ public class LevelManager : MonoBehaviour
     void LevelSuccess()
     {
         isLevelOver = true;
-        successText.enabled = true;
-        successText.text = "YOU BEAT THE LEVEL!";
 
-        // We only have one level so far so just reload level
-        Invoke("LoadCurrentLevel", 2);
+        // Load the surface level after reaching anchorpoint
+        Invoke("LoadSurfaceScene", 2);
     }
 
     void LevelLost()
     {
         isLevelOver = true;
-        successText.enabled = true;
-        successText.text = "YOU LOST";
 
-        // We only have one level so far so just reload level
-        Invoke("LoadCurrentLevel", 2);
+        // Load the surface level after losing air
+        Invoke("LoadSurfaceScene", 2);
 
     }
 
-    void LoadCurrentLevel()
+    void LoadSurfaceScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(surfaceScene);
     }
 }
   

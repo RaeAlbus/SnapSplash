@@ -5,8 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float movementSpeed = 5f;
+    public Transform switchTransform;
     private Camera playerCamera;
     private CharacterController characterController;
+
+    private LevelManager levelManager;
+
+    private const float DISTANCE_TO_INTERACT = 5f;
+
 
     void Start()
     {
@@ -15,6 +21,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         characterController = GetComponent<CharacterController>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void Update()
@@ -28,5 +35,17 @@ public class PlayerController : MonoBehaviour
 
         // Optionally, you can add jumping logic or other actions here
         characterController.Move(movementDirection.normalized * movementSpeed * Time.deltaTime);
+
+        // Switch To Surface if close to switch interactable
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            float distanceToSwitch = Vector3.Distance(transform.position, switchTransform.position);
+            if (distanceToSwitch < DISTANCE_TO_INTERACT)
+            {
+                levelManager.isDiving = !levelManager.isDiving;
+                levelManager.LoadSurfaceScene();
+
+            }
+        }
     }
 }

@@ -6,9 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    
+    // The level to Load when the player interacts with the level exit
+    public string surfaceScene;
+
+    //Whether the player is currently on a dive
+    public bool isDiving;
+
     // The total amount of air the player has for this level at the start
-    public float totalAir = 20;
+    public float totalAir = 20f;
 
     // Amount of air left at this second in level
     private float airLeft;
@@ -51,20 +56,11 @@ public class LevelManager : MonoBehaviour
     {
         UpdateUI();
 
-        if(airLeft > 0)
+        if(isDiving)
         {
-            airLeft -= Time.deltaTime;
-        } else {
-            airLeft = 0;
-            LevelLost();
+            UpdateAir();
+            //TODO: UpdateDepth();
         }
-
-        if(currentDepth < 0 && airLeft != 0)
-        {
-            LevelSuccess();
-        }
-
-
     }
 
     void UpdateUI()
@@ -73,6 +69,19 @@ public class LevelManager : MonoBehaviour
         airUI.value = airLeft / totalAir;
         storageUI.text = "" + storageLeft;
         storageUICamera.text = "" + storageLeft;
+    }
+
+    void UpdateAir()
+    {
+        if (airLeft > 0)
+        {
+            airLeft -= Time.deltaTime;
+        }
+        else
+        {
+            airLeft = 0;
+            LevelLost();
+        }
     }
 
     public void UseCameraUI()
@@ -87,30 +96,25 @@ public class LevelManager : MonoBehaviour
         playerCanvas.gameObject.SetActive(true);
     }
 
-    void LevelSuccess()
-    {
-        isLevelOver = true;
-        successText.enabled = true;
-        successText.text = "YOU BEAT THE LEVEL!";
-
-        // We only have one level so far so just reload level
-        Invoke("LoadCurrentLevel", 2);
-    }
-
     void LevelLost()
     {
         isLevelOver = true;
         successText.enabled = true;
         successText.text = "YOU LOST";
 
-        // We only have one level so far so just reload level
-        Invoke("LoadCurrentLevel", 2);
+        // Switch back to Surface after passing out
+        Invoke("LoadSurfaceScene", 2);
 
     }
 
     void LoadCurrentLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadSurfaceScene()
+    {
+        SceneManager.LoadScene(surfaceScene);
     }
 }
   

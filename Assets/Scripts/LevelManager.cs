@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     private float airLeft;
 
     // Whether or not level is over
-    private bool isLevelOver;
+    public static bool isLevelLost;
 
     // Total amount of pics the player can hold at once
     public int totalStorage = 16;
@@ -46,6 +46,8 @@ public class LevelManager : MonoBehaviour
         UsePlayerUI();
         storageLeft = totalStorage;
         airLeft = totalAir;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -60,12 +62,8 @@ public class LevelManager : MonoBehaviour
             LevelLost();
         }
 
-        if(currentDepth < 0 && airLeft != 0)
-        {
-            LevelSuccess();
-        }
-
-
+        // TODO: LOGIC WHEN PLAYER REACHES ANCHORPOINT
+        // LevelSuccess();
     }
 
     void UpdateUI()
@@ -90,23 +88,26 @@ public class LevelManager : MonoBehaviour
 
     void LevelSuccess()
     {
-        isLevelOver = true;
-
         // Load the surface level after reaching anchorpoint
         Invoke("LoadSurfaceScene", 2);
     }
 
     void LevelLost()
     {
-        isLevelOver = true;
+        isLevelLost = true;
 
         // Load the surface level after losing air
-        Invoke("LoadSurfaceScene", 2);
+        //Invoke("LoadSurfaceScene", 2);
 
     }
 
     void LoadSurfaceScene()
     {
+        if (isLevelLost)
+        {
+            storageLeft = totalStorage;
+        }
+
         SceneManager.LoadScene(surfaceScene);
     }
 }

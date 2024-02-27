@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private Camera playerCamera;
     private CharacterController characterController;
 
+    public float fallSpeed = 1.5f;
+    public float rotationSpeed = 10f;
+
     void Start()
     {
         // Assuming the camera is a child of the player
@@ -20,13 +23,24 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        // Player movement based on camera direction
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        if (!LevelManager.isLevelLost)
+        {
+            // Player movement based on camera direction
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
 
-        Vector3 movementDirection = playerCamera.transform.forward * vertical + playerCamera.transform.right * horizontal;
+            Vector3 movementDirection = playerCamera.transform.forward * vertical + playerCamera.transform.right * horizontal;
 
-        // Optionally, you can add jumping logic or other actions here
-        characterController.Move(movementDirection.normalized * movementSpeed * Time.deltaTime);
+            // Optionally, you can add jumping logic or other actions here
+            characterController.Move(movementDirection.normalized * movementSpeed * Time.deltaTime);
+        }
+        else
+        {
+            // have the player start falling
+            characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
+
+            // rotate the player like they are passing out
+            transform.Rotate(Vector3.right, rotationSpeed * Time.deltaTime);
+        }
     }
 }

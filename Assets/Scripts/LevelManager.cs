@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     private float airLeft;
 
     // Whether or not level is over
-    private bool isLevelOver;
+    public static bool isLevelLost;
 
     // Total amount of pics the player can hold at once
     public int totalStorage = 16;
@@ -38,18 +38,21 @@ public class LevelManager : MonoBehaviour
     public Text storageUI;
     public Text storageUICamera;
     public Text depthUI;
-    public Text successText;
 
     // Canvases: One for when camera is not equipped and one for when it is
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
+
+    // Surface scene to load when player leaves the water
+    public string surfaceScene;
 
     void Start()
     {
         UsePlayerUI();
         storageLeft = totalStorage;
         airLeft = totalAir;
-        successText.enabled = false;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -61,6 +64,12 @@ public class LevelManager : MonoBehaviour
             UpdateAir();
             //TODO: UpdateDepth();
         }
+<<<<<<< HEAD
+=======
+
+        // TODO: LOGIC WHEN PLAYER REACHES ANCHORPOINT
+        // LevelSuccess();
+>>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
     }
 
     void UpdateUI()
@@ -96,20 +105,37 @@ public class LevelManager : MonoBehaviour
         playerCanvas.gameObject.SetActive(true);
     }
 
+<<<<<<< HEAD
+=======
+    void LevelSuccess()
+    {
+        // Load the surface level after reaching anchorpoint
+        Invoke("LoadSurfaceScene", 2);
+    }
+
+>>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
     void LevelLost()
     {
-        isLevelOver = true;
-        successText.enabled = true;
-        successText.text = "YOU LOST";
+        isLevelLost = true;
 
+<<<<<<< HEAD
         // Switch back to Surface after passing out
         Invoke("LoadSurfaceScene", 2);
+=======
+        // Load the surface level after losing air
+        //Invoke("LoadSurfaceScene", 2);
+>>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
 
     }
 
-    void LoadCurrentLevel()
+    void LoadSurfaceScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (isLevelLost)
+        {
+            storageLeft = totalStorage;
+        }
+
+        SceneManager.LoadScene(surfaceScene);
     }
 
     public void LoadSurfaceScene()

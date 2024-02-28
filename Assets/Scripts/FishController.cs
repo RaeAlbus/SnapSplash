@@ -9,15 +9,19 @@ public class FishController : MonoBehaviour
 
     public float minPauseDuration = 5.0f;
 
-    public float minMoveDuration = 1.0f;
-    public float maxMoveDuration = 5.0f;
-
     private bool isMoving = false;
-    private Vector3 targetPosition;
+
+    public float fishSpeed = 10;
+
+    private GameObject[] wanderPoints;
+
+    private Vector3 nextDestination;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        wanderPoints = GameObject.FindGameObjectsWithTag("FishMovementPoints");
         StartCoroutine(Swim());
     }
 
@@ -29,27 +33,28 @@ public class FishController : MonoBehaviour
 
     IEnumerator Swim()
     {
-        while (true)
+        while(true)
         {
-            if (!isMoving)
+            nextDestination = wanderPoints[Random.Range(0, wanderPoints.Length)].transform.position;
+
+            transform.LookAt(nextDestination);
+
+            float distance = Vector3.Distance(transform.position, nextDestination);
+            float moveDuration = distance / fishSpeed;
+
+            float elaspedTime = 0f;
+            Vector3 startPos = transform.position;
+            while(elaspedTime < moveDuration)
             {
-                isMoving = true;
-                yield return new WaitForSeconds(minPauseDuration);
-                targetPosition = new Vector3(transform.position.x + Random.Range(-10.0f, 10.0f), transform.position.y, transform.position.z + Random.Range(-10.0f, 0.0f));
-                float moveDuration = Random.Range(minMoveDuration, maxMoveDuration);
-                float elapsedTime = 0.0f;
-                Vector3 startPosition = transform.position;
-                transform.LookAt(targetPosition);
-                while (elapsedTime < moveDuration)
-                {
-                    transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveDuration);
-                    elapsedTime += Time.deltaTime;
-                    yield return null;
-                }
-                transform.position = targetPosition;
-                isMoving = false;
+                transform.position = Vector3.Lerp(startPos, nextDestination, elaspedTime / moveDuration);
+                elaspedTime += Time.deltaTime;
+                yield return null;
             }
-            yield return null;
+
+            // Pause before selecting the next destination
+            float pauseDuration = Random.Range(minPauseDuration, moveDuration);
+            yield return new WaitForSeconds(pauseDuration);
+
         }
     }
 

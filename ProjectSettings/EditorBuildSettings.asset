@@ -4,8 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
+  m_Scenes: []
+    - enabled: 1
     path: Assets/Scenes/ShallowOcean.unity
     guid: 29bd7043d11b2464e9b34265c41aff46
   - enabled: 1

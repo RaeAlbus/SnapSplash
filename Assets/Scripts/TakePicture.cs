@@ -43,7 +43,7 @@ public class TakePicture : MonoBehaviour
     void CapturePic()
     {
         Debug.Log("Pic taken");
-
+        LevelManager.storageLeft -= 1;  
         RaycastHit hit;
 
         // If pointing at a FISH!
@@ -53,8 +53,7 @@ public class TakePicture : MonoBehaviour
             if(hit.collider.CompareTag("Fish"))
             {
                 Debug.Log("Fish hit");
-                LevelManager.storageLeft -= 1;
-                                Debug.Log("Pics left: " + LevelManager.storageLeft);
+                Debug.Log("Pics left: " + LevelManager.storageLeft);
             }
 
         }

@@ -8457,7 +8457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e662b046402dc40a55e602122489e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalAir: 3
+  totalAir: 18.91
   totalStorage: 16
   maxDepth: 0
   airUI: {fileID: 396619878}

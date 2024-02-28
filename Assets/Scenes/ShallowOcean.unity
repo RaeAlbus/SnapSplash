@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 1337596330}
-  levelManagerScript: {fileID: 0}
+  levelManagerScript: {fileID: 1337596331}
 --- !u!1 &33259367
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,7 +2096,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.16373543, y: -0.6588865, z: 0.17706731, w: 0.71253526}
   m_LocalPosition: {x: 30.65392, y: 11.084358, z: 4.7906966}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 96041335}
@@ -9469,7 +9469,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.24116847, w: 0.9704833}
   m_LocalPosition: {x: 34.518585, y: 13.664976, z: 17.426456}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 96041335}
@@ -12280,7 +12280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e662b046402dc40a55e602122489e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalAir: 18.91
+  surfaceScene: Surface
+  isDiving: 1
+  totalAir: 20
   totalStorage: 16
   maxDepth: 0
   airUI: {fileID: 396619878}
@@ -13942,7 +13944,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.036067717, y: 0.40126008, z: 0.08193828, w: 0.91157866}
   m_LocalPosition: {x: 4.5939198, y: 0.67435837, z: 12.250696}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 96041335}
@@ -17340,6 +17342,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5954371238228588710, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654953706402111253, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8122002879968188958, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}

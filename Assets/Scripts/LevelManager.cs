@@ -6,9 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    
+    // The level to Load when the player interacts with the level exit
+    public string surfaceScene;
+
+    //Whether the player is currently on a dive
+    public bool isDiving;
+
     // The total amount of air the player has for this level at the start
-    public float totalAir = 20;
+    public float totalAir = 20f;
 
     // Amount of air left at this second in level
     private float airLeft;
@@ -54,16 +59,17 @@ public class LevelManager : MonoBehaviour
     {
         UpdateUI();
 
-        if(airLeft > 0)
+        if(isDiving)
         {
-            airLeft -= Time.deltaTime;
-        } else {
-            airLeft = 0;
-            LevelLost();
+            UpdateAir();
+            //TODO: UpdateDepth();
         }
+<<<<<<< HEAD
+=======
 
         // TODO: LOGIC WHEN PLAYER REACHES ANCHORPOINT
         // LevelSuccess();
+>>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
     }
 
     void UpdateUI()
@@ -72,6 +78,19 @@ public class LevelManager : MonoBehaviour
         airUI.value = airLeft / totalAir;
         storageUI.text = "" + storageLeft;
         storageUICamera.text = "" + storageLeft;
+    }
+
+    void UpdateAir()
+    {
+        if (airLeft > 0)
+        {
+            airLeft -= Time.deltaTime;
+        }
+        else
+        {
+            airLeft = 0;
+            LevelLost();
+        }
     }
 
     public void UseCameraUI()
@@ -86,18 +105,26 @@ public class LevelManager : MonoBehaviour
         playerCanvas.gameObject.SetActive(true);
     }
 
+<<<<<<< HEAD
+=======
     void LevelSuccess()
     {
         // Load the surface level after reaching anchorpoint
         Invoke("LoadSurfaceScene", 2);
     }
 
+>>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
     void LevelLost()
     {
         isLevelLost = true;
 
+<<<<<<< HEAD
+        // Switch back to Surface after passing out
+        Invoke("LoadSurfaceScene", 2);
+=======
         // Load the surface level after losing air
         //Invoke("LoadSurfaceScene", 2);
+>>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
 
     }
 
@@ -108,6 +135,11 @@ public class LevelManager : MonoBehaviour
             storageLeft = totalStorage;
         }
 
+        SceneManager.LoadScene(surfaceScene);
+    }
+
+    public void LoadSurfaceScene()
+    {
         SceneManager.LoadScene(surfaceScene);
     }
 }

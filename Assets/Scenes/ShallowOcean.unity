@@ -12280,16 +12280,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e662b046402dc40a55e602122489e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalAir: 20
+  totalAir: 18.91
   totalStorage: 16
   maxDepth: 0
   airUI: {fileID: 396619878}
   storageUI: {fileID: 5568761516531409187}
   storageUICamera: {fileID: 2934043923486290390}
   depthUI: {fileID: 1194421274}
-  successText: {fileID: 1418964511}
   playerCanvas: {fileID: 1645470691}
   cameraCanvas: {fileID: 1544898154}
+  surfaceScene: ShallowOcean
 --- !u!4 &1337596332
 Transform:
   m_ObjectHideFlags: 0
@@ -15213,7 +15213,7 @@ RectTransform:
   - {fileID: 396619877}
   - {fileID: 593073465}
   - {fileID: 1317263160}
-  - {fileID: 1418964510}
+  - {fileID: 136743073}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -17322,6 +17322,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3127782176953413203, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      propertyPath: fallSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127782176953413203, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      propertyPath: rotationSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4580072509302814379, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -17374,6 +17382,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8158726395535383006, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8549782379748473331, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -17386,6 +17398,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8549782379748473331, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648770265}
     - targetCorrespondingSourceObject: {fileID: 7502233423030463978, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 23876038}

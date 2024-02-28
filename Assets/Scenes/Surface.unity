@@ -379,16 +379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e662b046402dc40a55e602122489e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDiving: 0
   totalAir: 20
   totalStorage: 16
   maxDepth: 0
-  airUI: {fileID: 0}
-  storageUI: {fileID: 0}
-  storageUICamera: {fileID: 0}
-  depthUI: {fileID: 0}
-  playerCanvas: {fileID: 0}
-  cameraCanvas: {fileID: 0}
 --- !u!4 &324488559
 Transform:
   m_ObjectHideFlags: 0
@@ -506,6 +499,7 @@ GameObject:
   - component: {fileID: 626507440}
   - component: {fileID: 626507443}
   - component: {fileID: 626507442}
+  - component: {fileID: 626507444}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -599,6 +593,18 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &626507444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626507439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dfa66360dc457540a88b2a2bc72f06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &675158334
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,13 +829,14 @@ GameObject:
   - component: {fileID: 880644809}
   - component: {fileID: 880644812}
   - component: {fileID: 880644811}
+  - component: {fileID: 880644813}
   m_Layer: 5
   m_Name: CameraUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!223 &880644809
 Canvas:
   m_ObjectHideFlags: 0
@@ -915,6 +922,18 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &880644813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880644808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dfa66360dc457540a88b2a2bc72f06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881544461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,6 +1536,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7654953706402111253, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654953706402111253, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
@@ -1593,8 +1616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3237f80ceb75014a950a45fa6285f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 0}
-  levelManagerScript: {fileID: 0}
+  levelManager: {fileID: 324488557}
 --- !u!1 &1422847453
 GameObject:
   m_ObjectHideFlags: 0

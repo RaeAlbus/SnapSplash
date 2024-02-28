@@ -6,8 +6,9 @@ public class TakePicture : MonoBehaviour
 {
 
     public GameObject levelManager;
-    public LevelManager levelManagerScript;
     private bool cameraEquipped;
+
+    private LevelManager levelManagerScript;
 
     void Start()
     {
@@ -20,12 +21,12 @@ public class TakePicture : MonoBehaviour
         
         if(Input.GetKey(KeyCode.Mouse1))
         {
-            levelManagerScript.UseCameraUI();
+         //   levelManagerScript.UseCameraUI();
             cameraEquipped = true;
         } 
         else
         {
-            levelManagerScript.UsePlayerUI();
+         //   levelManagerScript.UsePlayerUI();
             cameraEquipped = false;
         }
 

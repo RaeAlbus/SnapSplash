@@ -27,12 +27,14 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         levelManager = FindObjectOfType<LevelManager>();
         rb = GetComponentInChildren<Rigidbody>();
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
         // Switch To Surface if close to switch interactable
-        if (Input.GetKeyDown(KeyCode.Space) && !LevelManager.isLevelLost)
+        if (Input.GetKeyDown(KeyCode.Space) && !LevelManager.isLevelLost && !LevelManager.isDiving)
         {
             float distanceToSwitch = Vector3.Distance(transform.position, switchTransform.position);
             if (distanceToSwitch < DISTANCE_TO_INTERACT)

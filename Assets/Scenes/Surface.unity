@@ -350,7 +350,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257833191}
   m_CullTransparentMesh: 1
---- !u!1 &428303688
+--- !u!1 &324488557
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -358,8 +358,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 428303690}
-  - component: {fileID: 428303689}
+  - component: {fileID: 324488559}
+  - component: {fileID: 324488558}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -367,36 +367,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &428303689
+--- !u!114 &324488558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428303688}
+  m_GameObject: {fileID: 324488557}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0e662b046402dc40a55e602122489e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceScene: ShallowOcean
+  isDiving: 0
   totalAir: 20
   totalStorage: 16
   maxDepth: 0
-  airUI: {fileID: 542274866}
-  storageUI: {fileID: 1361059562}
-  storageUICamera: {fileID: 1314895635}
-  depthUI: {fileID: 1884919799}
-  successText: {fileID: 1422847454}
-  playerCanvas: {fileID: 626507440}
-  cameraCanvas: {fileID: 880644809}
---- !u!4 &428303690
+  airUI: {fileID: 0}
+  storageUI: {fileID: 0}
+  storageUICamera: {fileID: 0}
+  depthUI: {fileID: 0}
+  playerCanvas: {fileID: 0}
+  cameraCanvas: {fileID: 0}
+--- !u!4 &324488559
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428303688}
+  m_GameObject: {fileID: 324488557}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1517,6 +1516,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7654953706402111253, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8122002879968188958, guid: b8a4d4f2d97c2e943b260f80bea28d7c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.5
@@ -1590,8 +1593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3237f80ceb75014a950a45fa6285f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 428303688}
-  levelManagerScript: {fileID: 428303689}
+  levelManager: {fileID: 0}
+  levelManagerScript: {fileID: 0}
 --- !u!1 &1422847453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,9 +2611,9 @@ SceneRoots:
   - {fileID: 626507441}
   - {fileID: 880644810}
   - {fileID: 929562979}
-  - {fileID: 428303690}
   - {fileID: 1392101697}
   - {fileID: 1449602716}
   - {fileID: 675158338}
   - {fileID: 849854366}
   - {fileID: 1611734786}
+  - {fileID: 324488559}

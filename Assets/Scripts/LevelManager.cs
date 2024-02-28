@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    // The level to Load when the player interacts with the level exit
-    public string surfaceScene;
-
     //Whether the player is currently on a dive
     public bool isDiving;
 
@@ -43,9 +40,6 @@ public class LevelManager : MonoBehaviour
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
 
-    // Surface scene to load when player leaves the water
-    public string surfaceScene;
-
     void Start()
     {
         UsePlayerUI();
@@ -64,12 +58,9 @@ public class LevelManager : MonoBehaviour
             UpdateAir();
             //TODO: UpdateDepth();
         }
-<<<<<<< HEAD
-=======
 
         // TODO: LOGIC WHEN PLAYER REACHES ANCHORPOINT
         // LevelSuccess();
->>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
     }
 
     void UpdateUI()
@@ -105,42 +96,35 @@ public class LevelManager : MonoBehaviour
         playerCanvas.gameObject.SetActive(true);
     }
 
-<<<<<<< HEAD
-=======
     void LevelSuccess()
     {
         // Load the surface level after reaching anchorpoint
         Invoke("LoadSurfaceScene", 2);
     }
 
->>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
     void LevelLost()
     {
         isLevelLost = true;
-
-<<<<<<< HEAD
         // Switch back to Surface after passing out
         Invoke("LoadSurfaceScene", 2);
-=======
-        // Load the surface level after losing air
-        //Invoke("LoadSurfaceScene", 2);
->>>>>>> 6c4a9116554e24e11216032012208f25b5a09fa8
 
     }
 
-    void LoadSurfaceScene()
+    public void SwitchScene()
     {
         if (isLevelLost)
         {
             storageLeft = totalStorage;
         }
-
-        SceneManager.LoadScene(surfaceScene);
-    }
-
-    public void LoadSurfaceScene()
-    {
-        SceneManager.LoadScene(surfaceScene);
+        if (isDiving)
+        {
+            SceneManager.LoadScene("Surface");
+        }
+        else
+        {
+            SceneManager.LoadScene("Shallow Ocean");
+        }
+        isDiving = !isDiving;
     }
 }
   

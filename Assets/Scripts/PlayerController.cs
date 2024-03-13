@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float movementSpeed = 5f;
-    public Transform switchTransform;
     private Camera playerCamera;
     private CharacterController characterController;
     private Rigidbody rb;
@@ -13,10 +12,7 @@ public class PlayerController : MonoBehaviour
     public float fallSpeed = 1.5f;
     public float rotationSpeed = 10f;
 
-    private LevelManager levelManager;
-
     private const float DISTANCE_TO_INTERACT = 5f;
-
 
     void Start()
     {
@@ -25,7 +21,6 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         characterController = GetComponent<CharacterController>();
-        levelManager = FindObjectOfType<LevelManager>();
         rb = GetComponentInChildren<Rigidbody>();
 
         DontDestroyOnLoad(gameObject);
@@ -33,15 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Switch To Surface if close to switch interactable
-        if (Input.GetKeyDown(KeyCode.Space) && !LevelManager.isLevelLost && !LevelManager.isDiving)
-        {
-            float distanceToSwitch = Vector3.Distance(transform.position, switchTransform.position);
-            if (distanceToSwitch < DISTANCE_TO_INTERACT)
-            {
-                levelManager.SwitchScene();
-            }
-        }
+
     }
 
     private void FixedUpdate()
@@ -67,7 +54,7 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         Vector3 movementDirection = playerCamera.transform.forward * vertical + playerCamera.transform.right * horizontal;
-        
+
         rb.AddForce(movementDirection * movementSpeed);
     }
 }

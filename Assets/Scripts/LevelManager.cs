@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    // Singleton instance of the LevelManager
+    private static LevelManager _instance;
+
+    // Read-only instant of LevelManger to access from other scripts
+    public static LevelManager Instance => _instance;
+
     //Whether the player is currently on a dive
     public static bool isDiving;
 
@@ -30,7 +36,7 @@ public class LevelManager : MonoBehaviour
     // Current depth of player at this second 
     private float currentDepth;
 
-    /*// References to UI Elements
+    // References to UI Elements
     public Slider airUI;
     public Text storageUI;
     public Text storageUICamera;
@@ -38,38 +44,53 @@ public class LevelManager : MonoBehaviour
 
     // Canvases: One for when camera is not equipped and one for when it is
     public Canvas playerCanvas;
-    public Canvas cameraCanvas;*/
+    public Canvas cameraCanvas;
+
+    public Canvas surfaceCanvas;
 
     void Start()
     {
-    //    UsePlayerUI();
-        storageLeft = totalStorage;
-        airLeft = totalAir;
+        InitSurfaceLevel();
 
+        // Conditions for surface level only set at start of game
+        _instance = this;
+        storageLeft = totalStorage;
         DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-     //   UpdateUI();
-
-        if(isDiving)
+        if(isDiving && !isLevelLost)
         {
             UpdateAir();
+            UpdateUI();
             //TODO: UpdateDepth();
         }
-
-        // TODO: LOGIC WHEN PLAYER REACHES ANCHORPOINT
-        // LevelSuccess();
     }
 
-  /*  void UpdateUI()
+    void InitOceanLevel()
+    {
+        isDiving = true;
+        airLeft = totalAir;
+        isLevelLost = false;
+        UsePlayerUI();
+    }
+
+    void InitSurfaceLevel()
+    {
+        isDiving = false;
+        airLeft = totalAir;
+        isLevelLost = false;
+        UseSurfaceUI();
+    }
+
+    void UpdateUI()
     {
         depthUI.text = "" + currentDepth;
         airUI.value = airLeft / totalAir;
         storageUI.text = "" + storageLeft;
         storageUICamera.text = "" + storageLeft;
-    }*/
+    }
 
     void UpdateAir()
     {
@@ -80,51 +101,58 @@ public class LevelManager : MonoBehaviour
         else
         {
             airLeft = 0;
-            LevelLost();
+            playerCanvas.GetComponent<Canvas>().enabled = false;
+            LevelOver();
         }
     }
-/*
+
     public void UseCameraUI()
     {
-        playerCanvas.gameObject.SetActive(false);
-        cameraCanvas.gameObject.SetActive(true);
+        cameraCanvas.GetComponent<Canvas>().enabled = true;
+
+        playerCanvas.GetComponent<Canvas>().enabled = false;
+        surfaceCanvas.GetComponent<Canvas>().enabled = false;
     }
 
     public void UsePlayerUI()
     {
-        cameraCanvas.gameObject.SetActive(false);
-        playerCanvas.gameObject.SetActive(true);
+        playerCanvas.GetComponent<Canvas>().enabled = true;
+
+        cameraCanvas.GetComponent<Canvas>().enabled = false;
+        surfaceCanvas.GetComponent<Canvas>().enabled = false;
     }
-*/
-    void LevelSuccess()
+
+    public void UseSurfaceUI()
     {
-        // Load the surface level after reaching anchorpoint
+        surfaceCanvas.GetComponent<Canvas>().enabled = true;
+
+        cameraCanvas.GetComponent<Canvas>().enabled = false;
+        playerCanvas.GetComponent<Canvas>().enabled = false;
+    }
+
+    void LevelOver()
+    {
+        // Go back for air and switch scenes
+        airLeft = totalAir;
         Invoke("SwitchScene", 2);
     }
 
-    void LevelLost()
-    {
-        isLevelLost = true;
-        // Switch back to Surface after passing out
-        Invoke("SwitchScene", 2);
-
-    }
-
+    private int count = 0;
     public void SwitchScene()
     {
-        if (isLevelLost)
-        {
-            storageLeft = totalStorage;
-        }
+        count++;
+        Debug.Log("COunt+ " + count);
+        
         if (isDiving)
         {
             SceneManager.LoadScene("Surface");
+            InitSurfaceLevel();
         }
         else
         {
             SceneManager.LoadScene("ShallowOcean");
+            InitOceanLevel();
         }
-        isDiving = !isDiving;
     }
 }
   

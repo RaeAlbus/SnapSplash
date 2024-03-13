@@ -5,39 +5,37 @@ using UnityEngine;
 public class TakePicture : MonoBehaviour
 {
 
-    public GameObject levelManager;
     private bool cameraEquipped;
 
-    private LevelManager levelManagerScript;
 
     void Start()
     {
-        levelManagerScript = levelManager.GetComponent<LevelManager>();
         cameraEquipped = false;
     }
 
     void Update()
     {
-        
-        if(Input.GetKey(KeyCode.Mouse1))
+        if(LevelManager.isDiving)
         {
-         //   levelManagerScript.UseCameraUI();
-            cameraEquipped = true;
-        } 
-        else
-        {
-         //   levelManagerScript.UsePlayerUI();
-            cameraEquipped = false;
-        }
-
-        if(cameraEquipped)
-        {               
-            if(Input.GetKeyDown(KeyCode.Mouse0) && LevelManager.storageLeft > 0)
+            if(Input.GetKey(KeyCode.Mouse1))
             {
-                CapturePic();
+                LevelManager.Instance.UseCameraUI();
+                cameraEquipped = true;
+            } 
+            else
+            {
+                LevelManager.Instance.UsePlayerUI();
+                cameraEquipped = false;
+            }
+
+            if(cameraEquipped)
+            {               
+                if(Input.GetKeyDown(KeyCode.Mouse0) && LevelManager.storageLeft > 0)
+                {
+                    CapturePic();
+                }
             }
         }
-
     
     }
 

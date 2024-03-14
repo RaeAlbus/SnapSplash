@@ -51,8 +51,14 @@ public class TakePicture : MonoBehaviour
 
             if(hit.collider.CompareTag("Fish"))
             {
-                Debug.Log("Fish hit");
-                Debug.Log("Pics left: " + LevelManager.storageLeft);
+                FishController fish = hit.collider.GetComponent<FishController>();
+                if (fish != null)
+                {
+                    float fishValue = fish.fishValue;
+                    LevelManager.Instance.addFishValue(fishValue);
+                    Debug.Log("Fish hit! Value: " + fishValue);
+                    Debug.Log("Pics left: " + LevelManager.storageLeft);
+                }
             }
 
         }

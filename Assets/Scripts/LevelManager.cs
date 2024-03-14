@@ -48,6 +48,8 @@ public class LevelManager : MonoBehaviour
 
     public Canvas surfaceCanvas;
 
+    private float totalFishValue;
+
     void Start()
     {
         InitSurfaceLevel();
@@ -154,6 +156,12 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene("ShallowOcean");
             InitOceanLevel();
         }
+    }
+
+    public void addFishValue(float value)
+    {
+        totalFishValue += value;
+        Debug.Log("Total fish value: " + totalFishValue);
     }
 }
   

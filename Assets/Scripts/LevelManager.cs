@@ -102,6 +102,7 @@ public class LevelManager : MonoBehaviour
         {
             airLeft = 0;
             playerCanvas.GetComponent<Canvas>().enabled = false;
+            isLevelLost = true;
             LevelOver();
         }
     }
@@ -141,7 +142,7 @@ public class LevelManager : MonoBehaviour
     public void SwitchScene()
     {
         count++;
-        Debug.Log("COunt+ " + count);
+        Debug.Log("Count+ " + count);
         
         if (isDiving)
         {

@@ -148,7 +148,7 @@ public class LevelManager : MonoBehaviour
         
         if (isDiving)
         {
-            SceneManager.LoadScene("Surface");
+            SceneManager.LoadScene("PrototypeSurface");
             InitSurfaceLevel();
         }
         else

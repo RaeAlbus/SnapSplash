@@ -27,7 +27,12 @@ public class ShopKeeperBehavior : MonoBehaviour
         if(distanceToPlayer <= distanceToEnter)
         {
             anim.SetInteger("animState", 1);
-            inShop = true;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                inShop = true;
+                LevelManager.storageLeft = LevelManager.totalStorage;
+                LevelManager.money = LevelManager.money + LevelManager.totalFishValue;
+            }
         } else {
             inShop = false;
         }

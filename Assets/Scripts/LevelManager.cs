@@ -87,6 +87,8 @@ public class LevelManager : MonoBehaviour
         airLeft = totalAir;
         isLevelLost = false;
         player.transform.position = OceanSpawnPos;
+        SoundManager.Instance.PlaySplashSFX();
+        SoundManager.Instance.PlayBreathingSFX();
 
         UsePlayerUI();
     }
@@ -98,6 +100,7 @@ public class LevelManager : MonoBehaviour
         isLevelLost = false;
         player.transform.position = SurfaceSpawnPos;
         player.transform.rotation = Quaternion.Euler(SurfaceSpawnRot);
+        SoundManager.Instance.StopBreathingSFX();
 
         UseSurfaceUI();
     }

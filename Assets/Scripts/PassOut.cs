@@ -24,5 +24,9 @@ public class PassOut : MonoBehaviour
             // increase the alpha of the image
             fadeImage.color = new Color(0, 0, 0, Mathf.Lerp(fadeImage.color.a, 1, fadeSpeed * Time.deltaTime));
         }
+        else
+        {
+            fadeImage.color = new Color(0, 0, 0, 0);
+        }
     }
 }

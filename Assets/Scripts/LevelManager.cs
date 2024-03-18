@@ -48,16 +48,27 @@ public class LevelManager : MonoBehaviour
 
     public Canvas surfaceCanvas;
 
+    public static GameObject player;
+    public Vector3 OceanSpawnPos;
+    public Vector3 SurfaceSpawnPos;
+    public Vector3 SurfaceSpawnRot;
+
     private float totalFishValue;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        OceanSpawnPos = new Vector3(3.2f, -1.3f, 2.2f);
+        SurfaceSpawnPos = new Vector3(-218.1f, 3.84f, 135.3f);
+        SurfaceSpawnRot = new Vector3(0f, -335.4f, 0f);
+
         InitSurfaceLevel();
 
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
-        DontDestroyOnLoad(gameObject);
+
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -75,6 +86,8 @@ public class LevelManager : MonoBehaviour
         isDiving = true;
         airLeft = totalAir;
         isLevelLost = false;
+        player.transform.position = OceanSpawnPos;
+
         UsePlayerUI();
     }
 
@@ -83,6 +96,9 @@ public class LevelManager : MonoBehaviour
         isDiving = false;
         airLeft = totalAir;
         isLevelLost = false;
+        player.transform.position = SurfaceSpawnPos;
+        player.transform.rotation = Quaternion.Euler(SurfaceSpawnRot);
+
         UseSurfaceUI();
     }
 
@@ -148,14 +164,24 @@ public class LevelManager : MonoBehaviour
         
         if (isDiving)
         {
-            SceneManager.LoadScene("PrototypeSurface");
+            LoadSurface();
             InitSurfaceLevel();
         }
         else
         {
-            SceneManager.LoadScene("ShallowOcean");
+            LoadOcean();
             InitOceanLevel();
         }
+    }
+
+    private void LoadSurface()
+    {
+        SceneManager.LoadScene("Surface");
+    }
+
+    private void LoadOcean()
+    {
+        SceneManager.LoadScene("ShallowOcean");
     }
 
     public void addFishValue(float value)
@@ -164,4 +190,3 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Total fish value: " + totalFishValue);
     }
 }
-  

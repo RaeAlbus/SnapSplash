@@ -45,7 +45,6 @@ public class LevelManager : MonoBehaviour
     // Canvases: One for when camera is not equipped and one for when it is
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
-
     public Canvas surfaceCanvas;
 
     public static GameObject player;
@@ -67,8 +66,6 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
-
-        //DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -190,6 +187,6 @@ public class LevelManager : MonoBehaviour
     public void addFishValue(float value)
     {
         totalFishValue += value;
-        Debug.Log("Total fish value: " + totalFishValue);
+        //Debug.Log("Total fish value: " + totalFishValue);
     }
 }

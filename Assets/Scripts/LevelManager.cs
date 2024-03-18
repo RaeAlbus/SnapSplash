@@ -25,10 +25,13 @@ public class LevelManager : MonoBehaviour
     public static bool isLevelLost;
 
     // Total amount of pics the player can hold at once
-    public int totalStorage = 16;
+    public static int totalStorage = 16;
 
     // Amount of pics player is currently holding
     public static int storageLeft;
+
+    // Money the player has earned from selling fish
+    public static float money;
 
     // Maximum depth for this level
     public float maxDepth;
@@ -40,12 +43,13 @@ public class LevelManager : MonoBehaviour
     public Slider airUI;
     public Text storageUI;
     public Text storageUICamera;
+    public Text storageUISurface;
     public Text depthUI;
+    public Text moneyUI;
 
     // Canvases: One for when camera is not equipped and one for when it is
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
-
     public Canvas surfaceCanvas;
 
     public static GameObject player;
@@ -53,7 +57,8 @@ public class LevelManager : MonoBehaviour
     public Vector3 SurfaceSpawnPos;
     public Vector3 SurfaceSpawnRot;
 
-    private float totalFishValue;
+    // the amount of money player will receive from selling fish
+    public static float totalFishValue;
 
     void Start()
     {
@@ -67,8 +72,6 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
-
-        //DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -76,9 +79,9 @@ public class LevelManager : MonoBehaviour
         if(isDiving && !isLevelLost)
         {
             UpdateAir();
-            UpdateUI();
             //TODO: UpdateDepth();
         }
+        UpdateUI();
     }
 
     void InitOceanLevel()
@@ -98,6 +101,7 @@ public class LevelManager : MonoBehaviour
         isDiving = false;
         airLeft = totalAir;
         isLevelLost = false;
+        //storageLeft = totalStorage; TODO: if passed out, then reset storage
         player.transform.position = SurfaceSpawnPos;
         player.transform.rotation = Quaternion.Euler(SurfaceSpawnRot);
         SoundManager.Instance.StopBreathingSFX();
@@ -111,6 +115,9 @@ public class LevelManager : MonoBehaviour
         airUI.value = airLeft / totalAir;
         storageUI.text = "" + storageLeft;
         storageUICamera.text = "" + storageLeft;
+        storageUISurface.text = "" + storageLeft;
+        moneyUI.text = "" + money;
+        
     }
 
     void UpdateAir()
@@ -190,6 +197,6 @@ public class LevelManager : MonoBehaviour
     public void addFishValue(float value)
     {
         totalFishValue += value;
-        Debug.Log("Total fish value: " + totalFishValue);
+        //Debug.Log("Total fish value: " + totalFishValue);
     }
 }

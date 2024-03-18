@@ -166,12 +166,8 @@ public class LevelManager : MonoBehaviour
         Invoke("SwitchScene", 2);
     }
 
-    private int count = 0;
     public void SwitchScene()
     {
-        count++;
-        Debug.Log("Count+ " + count);
-        
         if (isDiving)
         {
             LoadSurface();

@@ -69,6 +69,13 @@ public class TakePictureTEST : MonoBehaviour
             }
         }
         */
+        if(LevelManager.storageLeft != 0)
+        {
+            SoundManager.Instance.PlayCameraSFX();
+        } else {
+            SoundManager.Instance.PlayNoStorageSFX();
+        }
+
         foreach (GameObject objectToTakePictureOf in objectsToTakePicturesOf)
         {
             Vector3 directionToObject = objectToTakePictureOf.transform.position - transform.position;

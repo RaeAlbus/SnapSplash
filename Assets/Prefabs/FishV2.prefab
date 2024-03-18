@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8953685300276514876}
   - component: {fileID: 2590076912842714297}
   - component: {fileID: 5284457298607116108}
+  - component: {fileID: -5737750150073483805}
   m_Layer: 0
   m_Name: FishV2
   m_TagString: Fish
@@ -122,6 +123,27 @@ MonoBehaviour:
   fishValue: 100
   minPauseDuration: 5
   fishSpeed: 10
+--- !u!95 &-5737750150073483805
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5734514595947579316}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2ddf7d6efb5f3c2448332e025d842144, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8953294222028781043
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -57,27 +57,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        /*
-        if (LevelManager.isDiving)
-        {
-            if (!LevelManager.isLevelLost)
-            {
-                ControlPlayerUnderwater();
-            }
-            else
-            {
-                // have the player start falling
-                characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
-
-                // rotate the player like they are passing out
-                transform.Rotate(Vector3.right, rotationSpeed * Time.deltaTime);
-            }
-        }
-        */
-    }
-
     void ControlPlayerUnderwater()
     {
         // Player movement based on camera direction

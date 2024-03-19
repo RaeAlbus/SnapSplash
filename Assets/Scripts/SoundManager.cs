@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip cameraShotSFX;
     public AudioClip noStorageSFX;
     public AudioClip splashSFX;
-
+    public AudioClip cashSFX;
     AudioSource ambientSource;
     AudioSource oneShotSource;
 
@@ -54,5 +54,10 @@ public class SoundManager : MonoBehaviour
     public void PlaySplashSFX()
     {
         oneShotSource.PlayOneShot(splashSFX);
+    }
+
+    public void PlayCashSFX()
+    {
+        oneShotSource.PlayOneShot(cashSFX);
     }
 }

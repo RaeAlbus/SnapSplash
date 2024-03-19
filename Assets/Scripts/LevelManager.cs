@@ -104,7 +104,6 @@ public class LevelManager : MonoBehaviour
         isDiving = false;
         airLeft = totalAir;
         isLevelLost = false;
-        //storageLeft = totalStorage; TODO: if passed out, then reset storage
         player.transform.position = SurfaceSpawnPos;
         player.transform.rotation = Quaternion.Euler(SurfaceSpawnRot);
         SoundManager.Instance.StopBreathingSFX();
@@ -167,6 +166,7 @@ public class LevelManager : MonoBehaviour
         // Go back for air and switch scenes
         airLeft = totalAir;
         totalFishValue = 0;
+        storageLeft = totalStorage;
         Invoke("SwitchScene", 2);
     }
 

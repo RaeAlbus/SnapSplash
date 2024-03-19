@@ -60,6 +60,9 @@ public class LevelManager : MonoBehaviour
     // the amount of money player will receive from selling fish
     public static float totalFishValue;
 
+    // fish in current scene
+    public static GameObject[] fishInScene;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -163,6 +166,7 @@ public class LevelManager : MonoBehaviour
     {
         // Go back for air and switch scenes
         airLeft = totalAir;
+        totalFishValue = 0;
         Invoke("SwitchScene", 2);
     }
 
@@ -177,6 +181,7 @@ public class LevelManager : MonoBehaviour
         {
             LoadOcean();
             InitOceanLevel();
+            Invoke("FindFish", 1f);
         }
     }
 
@@ -194,5 +199,10 @@ public class LevelManager : MonoBehaviour
     {
         totalFishValue += value;
         //Debug.Log("Total fish value: " + totalFishValue);
+    }
+
+    void FindFish()
+    {
+        fishInScene = GameObject.FindGameObjectsWithTag("Fish");
     }
 }

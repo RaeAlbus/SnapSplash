@@ -17,7 +17,7 @@ public class AnchorTravel : MonoBehaviour
     void Update()
     {
         // Switch To Surface if close to switch interactable
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             float distanceToSwitch = Vector3.Distance(player.transform.position, transform.position);
 

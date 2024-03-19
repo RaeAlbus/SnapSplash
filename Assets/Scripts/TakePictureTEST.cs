@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TakePictureTEST : MonoBehaviour
 {
@@ -10,43 +10,62 @@ public class TakePictureTEST : MonoBehaviour
 
     public float pictureThreshold = 30;
 
-    GameObject[] objectsToTakePicturesOf;
     private bool cameraEquipped;
+
+    public Image crosshair;
 
     void Start()
     {
         cameraEquipped = false;
-        objectsToTakePicturesOf = GameObject.FindGameObjectsWithTag("Fish");
     }
 
     void Update()
     {
-        //if (LevelManager.isDiving)
-        //{
+        if (LevelManager.isDiving)
+        {
             if (Input.GetKey(KeyCode.Mouse1))
             {
-                //LevelManager.Instance.UseCameraUI();
+                LevelManager.Instance.UseCameraUI();
                 cameraEquipped = true;
             }
             else
             {
-                //LevelManager.Instance.UsePlayerUI();
+                LevelManager.Instance.UsePlayerUI();
                 cameraEquipped = false;
             }
 
             if (cameraEquipped)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))// && LevelManager.storageLeft > 0)
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
                 {
-                    CapturePic();
+                    if (hit.collider.CompareTag("Fish"))
+                    {
+                        crosshair.transform.localScale = Vector3.Lerp(crosshair.transform.localScale, new Vector3(0.7f, 0.7f, 1f), Time.deltaTime * 4);
+                    }
+                    else
+                    {
+                        crosshair.transform.localScale = Vector3.Lerp(crosshair.transform.localScale, new Vector3(1f, 1f, 1f), Time.deltaTime * 4);
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    if (LevelManager.storageLeft != 0)
+                    {
+                        CapturePic();
+                    }
+                    else
+                    {
+                        SoundManager.Instance.PlayNoStorageSFX();
+                    }
                 }
             }
-        //}
-
+        }
     }
 
     void CapturePic()
     {
+        LevelManager.storageLeft -= 1;
         /*
         Debug.Log("Pic taken");
         // Cast a sphere along the line from the camera
@@ -69,14 +88,9 @@ public class TakePictureTEST : MonoBehaviour
             }
         }
         */
-        if(LevelManager.storageLeft != 0)
-        {
-            SoundManager.Instance.PlayCameraSFX();
-        } else {
-            SoundManager.Instance.PlayNoStorageSFX();
-        }
+        SoundManager.Instance.PlayCameraSFX();
 
-        foreach (GameObject objectToTakePictureOf in objectsToTakePicturesOf)
+        foreach (GameObject objectToTakePictureOf in LevelManager.fishInScene)
         {
             Vector3 directionToObject = objectToTakePictureOf.transform.position - transform.position;
             if (Vector3.Magnitude(directionToObject) < 30)
@@ -101,7 +115,7 @@ public class TakePictureTEST : MonoBehaviour
                     {
                         fishValue *= .5f;
                     }
-                    //LevelManager.Instance.addFishValue(fishValue);
+                    LevelManager.Instance.addFishValue(fishValue);
                     Debug.Log("Fish hit! Value: " + fishValue);
                 }
             }

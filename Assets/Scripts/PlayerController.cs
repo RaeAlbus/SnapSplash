@@ -5,18 +5,20 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public float movementSpeedUnderwater = 5f;
+    [Header("Underwater")]
+    public float movementSpeedUnderwater = 3f;
+    public float agilityUnderwater = 3;
 
+    [Header("Abovewater")]
+    public float moveSpeedAbovewater = 5.9f;
+    public float jumpHeightAbovewater = 2.9f;
+    public float gravityAbovewater = 16.5f;
+    public float airControlAbovewater = 3.4f;
+
+    [Header("Fainting")]
     public float fallSpeed = 1.5f;
-    public float rotationSpeed = 10f;
+    public float rotationSpeed = 10f;   
 
-    private const float DISTANCE_TO_INTERACT = 5f;
-
-    public float moveSpeedAbovewater = 10;
-    public float jumpHeightAbovewater = 10;
-    public float gravityAbovewater = 9.81f;
-    public float airControlAbovewater = 10;
-    public float controlUnderwater = 10;
 
     Vector3 input, moveDirection, moveDirectionUnderwater;
     private Camera playerCamera;
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour
         input *= movementSpeedUnderwater;
 
         //rb.AddForce(movementDirection * movementSpeedUnderwater);
-        moveDirectionUnderwater = Vector3.Lerp(moveDirectionUnderwater, input, controlUnderwater * Time.deltaTime);
+        moveDirectionUnderwater = Vector3.Lerp(moveDirectionUnderwater, input, agilityUnderwater * Time.deltaTime);
         characterController.Move(moveDirectionUnderwater * Time.deltaTime);
     }
 

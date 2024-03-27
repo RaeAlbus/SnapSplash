@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     public static bool isDiving;
 
     // The total amount of air the player has for this level at the start
+    [Header("Level Info")]
     public float totalAir = 20f;
 
     // Amount of air left at this second in level
@@ -40,6 +41,7 @@ public class LevelManager : MonoBehaviour
     private float currentDepth;
 
     // References to UI Elements
+    [Header("UI Elements")]
     public Slider airUI;
     public Text storageUI;
     public Text storageUICamera;
@@ -48,11 +50,13 @@ public class LevelManager : MonoBehaviour
     public Text moneyUI;
 
     // Canvases: One for when camera is not equipped and one for when it is
+    [Header("Canvases")]
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
     public Canvas surfaceCanvas;
 
     public static GameObject player;
+    [Header("Spawnpoints")]
     public Vector3 OceanSpawnPos;
     public Vector3 SurfaceSpawnPos;
     public Vector3 SurfaceSpawnRot;

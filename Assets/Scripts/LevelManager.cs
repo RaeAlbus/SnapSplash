@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class LevelManager : MonoBehaviour
 {
@@ -208,5 +209,12 @@ public class LevelManager : MonoBehaviour
     void FindFish()
     {
         fishInScene = GameObject.FindGameObjectsWithTag("Fish");
+        GameObject[] sharksInScene = GameObject.FindGameObjectsWithTag("Shark");
+        fishInScene = fishInScene.Concat(sharksInScene).ToArray();
+    }
+
+    public void LoseAir(float airLoss)
+    {
+        airLeft -= airLoss;
     }
 }

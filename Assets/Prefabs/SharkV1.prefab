@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 5301351232545971519}
   - component: {fileID: 8158930225341300616}
   - component: {fileID: 4329772546291093800}
+  - component: {fileID: 2415118390602958338}
+  - component: {fileID: 5086349519563228697}
   m_Layer: 0
   m_Name: SharkV1
-  m_TagString: Fish
+  m_TagString: Shark
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4509047229895901276}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.81996536, y: -1.8300762, z: -7.8643737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -114,12 +116,53 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4509047229895901276}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f17667a5c0336b743bd5a7440fa98192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fishValue: 100
   minPauseDuration: 1
-  minMoveDuration: 1
-  maxMoveDuration: 5
+  fishSpeed: 10
+--- !u!114 &2415118390602958338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4509047229895901276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef52943abc6d2a489e6b3b7ada58602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharkValue: 200
+  currentState: 0
+  attackDistance: 3.5
+  chaseDistance: 15
+  sharkSpeed: 2
+  chaseSpeed: 5
+  biteRate: 1
+  stunDuration: 2
+  player: {fileID: 0}
+--- !u!95 &5086349519563228697
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4509047229895901276}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5980b9270d6af1b478e4b5da17bb1f17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

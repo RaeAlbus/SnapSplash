@@ -98,8 +98,18 @@ public class TakePictureTEST : MonoBehaviour
                 float angleToFish = Vector3.Dot(directionToObject.normalized, transform.forward);
                 if (angleToFish > pictureThreshold)
                 {
-                    FishController fish = objectToTakePictureOf.GetComponent<FishController>();
-                    float fishValue = fish.fishValue;
+                    float fishValue;
+                    if (objectToTakePictureOf.CompareTag("Shark"))
+                    {
+                        SharkAI shark = objectToTakePictureOf.GetComponent<SharkAI>();
+                        fishValue = shark.sharkValue;
+                        shark.StunShark();
+                    }
+                    else 
+                    {
+                        fishValue = objectToTakePictureOf.GetComponent<FishController>().fishValue;
+                    }
+                    
                     if (angleToFish > .9975)
                     {
                         fishValue *= 1;

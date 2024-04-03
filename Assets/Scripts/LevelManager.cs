@@ -40,6 +40,9 @@ public class LevelManager : MonoBehaviour
     // Current depth of player at this second 
     private float currentDepth;
 
+    // Inventory of the player
+    public List<Item> inventory = new List<Item>();
+
     // References to UI Elements
     [Header("UI Elements")]
     public Slider airUI;
@@ -91,6 +94,8 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
+    //----------------------------------------------------SCENE SWITCHING FUNCTIONALITY----------------------------------------------
+
     void InitOceanLevel()
     {
         isDiving = true;
@@ -115,6 +120,42 @@ public class LevelManager : MonoBehaviour
         UseSurfaceUI();
     }
 
+    void LevelOver()
+    {
+        // Go back for air and switch scenes
+        airLeft = totalAir;
+        totalFishValue = 0;
+        storageLeft = totalStorage;
+        Invoke("SwitchScene", 2);
+    }
+
+    public void SwitchScene()
+    {
+        if (isDiving)
+        {
+            LoadSurface();
+            InitSurfaceLevel();
+        }
+        else
+        {
+            LoadOcean();
+            InitOceanLevel();
+            Invoke("FindFish", 1f);
+        }
+    }
+
+    private void LoadSurface()
+    {
+        SceneManager.LoadScene("Surface");
+    }
+
+    private void LoadOcean()
+    {
+        SceneManager.LoadScene("ShallowOcean");
+    }
+
+    //-------------------------------------------------------------UI FUNCTIONALITY---------------------------------------------------------
+
     void UpdateUI()
     {
         depthUI.text = "" + currentDepth;
@@ -123,7 +164,6 @@ public class LevelManager : MonoBehaviour
         storageUICamera.text = "" + storageLeft;
         storageUISurface.text = "" + storageLeft;
         moneyUI.text = "" + money;
-        
     }
 
     void UpdateAir()
@@ -165,48 +205,16 @@ public class LevelManager : MonoBehaviour
         playerCanvas.GetComponent<Canvas>().enabled = false;
     }
 
-    void LevelOver()
-    {
-        // Go back for air and switch scenes
-        airLeft = totalAir;
-        totalFishValue = 0;
-        storageLeft = totalStorage;
-        Invoke("SwitchScene", 2);
-    }
-
-    public void SwitchScene()
-    {
-        if (isDiving)
-        {
-            LoadSurface();
-            InitSurfaceLevel();
-        }
-        else
-        {
-            LoadOcean();
-            InitOceanLevel();
-            Invoke("FindFish", 1f);
-        }
-    }
-
-    private void LoadSurface()
-    {
-        SceneManager.LoadScene("Surface");
-    }
-
-    private void LoadOcean()
-    {
-        SceneManager.LoadScene("ShallowOcean");
-    }
+    //----------------------------------------------------PLAYER VALUES FUNCTIONALITY----------------------------------------------
 
     public void addFishValue(float value)
     {
         totalFishValue += value;
-        //Debug.Log("Total fish value: " + totalFishValue);
     }
 
     void FindFish()
     {
         fishInScene = GameObject.FindGameObjectsWithTag("Fish");
     }
+
 }

@@ -43,7 +43,6 @@ public class ShopKeeperUI : MonoBehaviour
         }
 
         currTalking = false;
-
         dialougeCanvas.enabled = false;
 
     }
@@ -122,9 +121,11 @@ public class ShopKeeperUI : MonoBehaviour
 
         StartCoroutine(DisplayTextsSequentially(notSoldDialouge, 0, () =>
         {
-            dialougePanel.enabled = false;
+            dialougeCanvas.enabled = false;
             shopPanel.gameObject.SetActive(true);
-            
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }));
     }
 
@@ -159,9 +160,20 @@ public class ShopKeeperUI : MonoBehaviour
         dialougeText.text = texts[index];
         dialougeText.maxVisibleCharacters = 0;
 
-        while (dialougeText.maxVisibleCharacters < texts[index].Length)
+        bool displayAllText = false;
+        while (!displayAllText && dialougeText.maxVisibleCharacters < texts[index].Length)
         {
-            dialougeText.maxVisibleCharacters++;
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Display the entire text if the player left-clicks
+                dialougeText.maxVisibleCharacters = texts[index].Length;
+                displayAllText = true;
+            }
+            else
+            {
+                dialougeText.maxVisibleCharacters++;
+            }
+
             yield return new WaitForSeconds(0.05f);
         }
 
@@ -173,6 +185,7 @@ public class ShopKeeperUI : MonoBehaviour
         }
 
         clickToContinueText.enabled = false;
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         StartCoroutine(DisplayTextsSequentially(texts, index + 1, onComplete));
     }
 

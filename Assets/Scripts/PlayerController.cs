@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         characterController = GetComponent<CharacterController>();
         rb = GetComponentInChildren<Rigidbody>();
-
-        //DontDestroyOnLoad(gameObject);
     }
 
     void Update()

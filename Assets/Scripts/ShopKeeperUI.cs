@@ -79,6 +79,9 @@ public class ShopKeeperUI : MonoBehaviour
 
         StartCoroutine(DisplayTextsSequentially(exitTexts, 0, () =>
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
             dialougeCanvas.enabled = false;
         }));
     }
@@ -137,6 +140,9 @@ public class ShopKeeperUI : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        dialougePanel.gameObject.SetActive(true);
+        shopPanel.gameObject.SetActive(false);
 
         string justwordsatthispointguysidk = "Hope you got what you need";
         string[] exitShop = {justwordsatthispointguysidk};

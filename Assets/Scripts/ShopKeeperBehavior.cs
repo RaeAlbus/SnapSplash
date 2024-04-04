@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class ShopKeeperBehavior : MonoBehaviour
 {
+    // Inspector vars
     public static GameObject player;
+
+    // How far away player must be to trigger "shopping state"
+    public float distanceToEnter = 5f;
+
+    // Current distance from shopkeeper to player
     private float distanceToPlayer;
 
-    private float distanceToEnter = 5f;
-
+    // Triggered when player is within distanceToEnter
     private bool inShop;
+    
     private Animator anim;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -19,33 +26,56 @@ public class ShopKeeperBehavior : MonoBehaviour
         anim.SetInteger("animState", 0);
     }
 
-    // Update is called once per frame
     void Update()
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        if(distanceToPlayer <= distanceToEnter)
+        if(distanceToPlayer <= distanceToEnter && !inShop)
         {
+            // Initializes waving animation
             anim.SetInteger("animState", 1);
             inShop = true;
+
+            // Starts the introduction dialouge
+            ShopKeeperUI.Instance.InitDialouge();
         } 
-        else 
+        else if(distanceToPlayer > distanceToEnter && inShop)
         {
+            // Reverts back to idle animation
             anim.SetInteger("animState", 0);
             inShop = false;
+
+            // Starts outro dialouge
+            ShopKeeperUI.Instance.ExitDialouge();
         }
 
         if (Input.GetKeyDown(KeyCode.E) && inShop)
         {
-            if(LevelManager.storageLeft != LevelManager.totalStorage)
-            {
-                SoundManager.Instance.PlayCashSFX();
-                LevelManager.storageLeft = LevelManager.totalStorage;
-                LevelManager.money = LevelManager.money + LevelManager.totalFishValue;
-                LevelManager.totalFishValue = 0;
-            } else {
-                // no pics to sell
-            }
+            SellFishPics();
         }
+    }
+
+    public void SellFishPics()
+    {
+        if(LevelManager.storageLeft != LevelManager.totalStorage)
+        {
+            ShopKeeperUI.Instance.SoldFishDialouge(LevelManager.totalFishValue);
+
+            SoundManager.Instance.PlayCashSFX();
+            LevelManager.storageLeft = LevelManager.totalStorage;
+            LevelManager.money = LevelManager.money + LevelManager.totalFishValue;
+            LevelManager.totalFishValue = 0;
+        } 
+        else 
+        {
+            ShopKeeperUI.Instance.NoFishDialouge();
+
+            SoundManager.Instance.PlayNoStorageSFX();
+        }
+    }
+
+    public void BuyItems()
+    {
+        ShopKeeperUI.Instance.BuyItemDialouge();
     }
 }

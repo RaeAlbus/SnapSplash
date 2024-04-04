@@ -60,10 +60,12 @@ public class LevelManager : MonoBehaviour
 
     public static GameObject player;
     [Header("Spawnpoints")]
-    public Vector3 OceanSpawnPos;
-    public Vector3 SurfaceSpawnPos;
-    public Vector3 SurfaceSpawnRot;
-    public Vector3 MidLevelOceanSpawnPos;
+    public Transform shallowTopSpawn;
+    public Transform shallowBotSpawn;
+    public Transform midTopSpawn;
+    public Transform midBotSpawn;
+    public Transform deepTopSpawn;
+    public Transform surfaceAnchorSpawn;
 
     // the amount of money player will receive from selling fish
     public static float totalFishValue;
@@ -74,12 +76,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        OceanSpawnPos = new Vector3(3.2f, -1.3f, 2.2f);
-        SurfaceSpawnPos = new Vector3(-218.1f, 3.84f, 135.3f);
-        SurfaceSpawnRot = new Vector3(0f, -154.32f, 0f);
-        MidLevelOceanSpawnPos = new Vector3(-2.27f, 17.62f, 1.67f);
 
-        InitSurfaceLevel();
+        InitGame();
 
         // Conditions for surface level only set at start of game
         _instance = this;
@@ -100,17 +98,37 @@ public class LevelManager : MonoBehaviour
 
     //----------------------------------------------------SCENE SWITCHING FUNCTIONALITY----------------------------------------------
 
+    void TeleportPlayer(Transform loc)
+    {
+        CharacterController c = player.GetComponent<CharacterController>();
+        c.enabled = false;
+        player.transform.position = loc.position;
+        player.transform.rotation = loc.rotation;
+        Physics.SyncTransforms();
+        c.enabled = true;
+    }
+
     void InitOceanLevel()
     {
         isDiving = true;
         airLeft = totalAir;
         isLevelLost = false;
-        player.transform.position = OceanSpawnPos;
+        TeleportPlayer(shallowTopSpawn);
         SoundManager.Instance.PlaySplashSFX();
         SoundManager.Instance.StopWalkingSFX();
         SoundManager.Instance.PlayBreathingSFX();
 
         UsePlayerUI();
+    }
+
+    void InitGame()
+    {
+
+        isDiving = false;
+        airLeft = totalAir;
+        isLevelLost = false;
+        SoundManager.Instance.PlayWalkingSFX();
+        UseSurfaceUI();
     }
 
     void InitSurfaceLevel()
@@ -125,34 +143,44 @@ public class LevelManager : MonoBehaviour
         isDiving = false;
         airLeft = totalAir;
         isLevelLost = false;
-        player.transform.position = SurfaceSpawnPos;
-        player.transform.rotation = Quaternion.Euler(SurfaceSpawnRot);
+        TeleportPlayer(surfaceAnchorSpawn);
         SoundManager.Instance.StopBreathingSFX();
         SoundManager.Instance.PlayWalkingSFX();
 
         UseSurfaceUI();
     }
 
-    void InitMidLevelOcean()
+    void InitMidLevelOcean(bool topSpawn)
     {
-
-        player.transform.position = MidLevelOceanSpawnPos;
+        if (topSpawn)
+        {
+            TeleportPlayer(midTopSpawn);
+        } else
+        {
+            TeleportPlayer(midBotSpawn);
+        }
         LoadMidLevelOcean();
-        Invoke("FindFish", 1f);
+        Invoke("FindFish", 0.5f);
     }
 
-    void InitShallowOcean()
+    void InitShallowOcean(bool topSpawn)
     {
-        player.transform.position = OceanSpawnPos;
+        if (topSpawn)
+        {
+            TeleportPlayer(shallowTopSpawn);
+        } else
+        {
+            TeleportPlayer(shallowBotSpawn);
+        }
         LoadShallowOcean();
-        Invoke("FindFish", 1f);
+        Invoke("FindFish", 0.5f);
     }
 
     void InitDeepOcean()
     {
-        player.transform.position = OceanSpawnPos;
+        TeleportPlayer(shallowTopSpawn);
         LoadDeepOcean();
-        Invoke("FindFish", 1f);
+        Invoke("FindFish", 0.5f);
     }
 
     public void LoadUpLevelOcean()
@@ -161,22 +189,21 @@ public class LevelManager : MonoBehaviour
 
         if (sceneName == "MidLevelOcean")
         {
-            InitShallowOcean();
+            InitShallowOcean(false);
         }
         else if (sceneName == "DeepOcean")
         {
-            InitMidLevelOcean();
+            InitMidLevelOcean(false);
         }
     }
 
     public void LoadDownLevelOcean()
     {
         string sceneName = SceneManager.GetActiveScene().name;
-        print(sceneName);
 
         if (sceneName == "ShallowOcean")
         {
-            InitMidLevelOcean();
+            InitMidLevelOcean(true);
         }
         else if (sceneName == "MidLevelOcean")
         {
@@ -190,7 +217,7 @@ public class LevelManager : MonoBehaviour
         airLeft = totalAir;
         totalFishValue = 0;
         storageLeft = totalStorage;
-        Invoke("SwitchScene", 2);
+        Invoke("SwitchScene", 1);
     }
 
     public void SwitchScene()
@@ -204,7 +231,7 @@ public class LevelManager : MonoBehaviour
         {
             LoadShallowOcean();
             InitOceanLevel();
-            Invoke("FindFish", 1f);
+            Invoke("FindFish", 0.5f);
         }
     }
 
@@ -258,7 +285,7 @@ public class LevelManager : MonoBehaviour
 
     void UpdateDepth()
     {
-        currentDepth = player.transform.position.y - OceanSpawnPos.y;
+        currentDepth = player.transform.position.y - shallowTopSpawn.transform.position.y;
         if (currentDepth < maxDepth)
         {
             playerCanvas.GetComponent<Canvas>().enabled = false;

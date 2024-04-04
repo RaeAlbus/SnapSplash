@@ -84,15 +84,23 @@ public class Shop : MonoBehaviour
     public void UpdateValues(Item item)
     {
         string[] itemVals = item.name.Split(' ');
+        string name = itemVals[1];
+        int value = int.Parse(itemVals[0]);
         
-        if(itemVals[1] == "Air")
+        if(name == "Air")
         {
-            LevelManager.totalAir = int.Parse(itemVals[0]);
+            // Only update if it is increasing your air
+            if(LevelManager.totalAir < value){
+                LevelManager.totalAir = value;
+            }
         }
-        else if(itemVals[1] == "Storage")
+        else if(name == "Storage")
         {
-            LevelManager.storageLeft += (int.Parse(itemVals[0]) - LevelManager.totalStorage);
-            LevelManager.totalStorage = int.Parse(itemVals[0]);
+            // Only update if it is increasing your storage
+            if(LevelManager.totalStorage < value){
+                LevelManager.storageLeft += (value - LevelManager.totalStorage);
+                LevelManager.totalStorage = value;
+            }
         }
     }
 

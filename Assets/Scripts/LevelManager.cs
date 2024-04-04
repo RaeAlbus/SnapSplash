@@ -80,6 +80,7 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
+        money = 1000;
     }
 
     void Update()
@@ -102,6 +103,7 @@ public class LevelManager : MonoBehaviour
         isLevelLost = false;
         player.transform.position = OceanSpawnPos;
         SoundManager.Instance.PlaySplashSFX();
+        SoundManager.Instance.StopWalkingSFX();
         SoundManager.Instance.PlayBreathingSFX();
 
         UsePlayerUI();
@@ -122,6 +124,7 @@ public class LevelManager : MonoBehaviour
         player.transform.position = SurfaceSpawnPos;
         player.transform.rotation = Quaternion.Euler(SurfaceSpawnRot);
         SoundManager.Instance.StopBreathingSFX();
+        SoundManager.Instance.PlayWalkingSFX();
 
         UseSurfaceUI();
     }

@@ -49,9 +49,13 @@ public class ShopKeeperUI : MonoBehaviour
 
     public void InitDialouge()
     {
+        // Go into dialouge mode and show dialouge box
         currTalking = true;
         dialougeCanvas.enabled = true;
+
+        // Hidden until triggered to appear
         clickToContinueText.enabled = false;
+        shopPanel.gameObject.SetActive(false);
         sellBtn.gameObject.SetActive(false);
         buyBtn.gameObject.SetActive(false);
 
@@ -121,11 +125,25 @@ public class ShopKeeperUI : MonoBehaviour
 
         StartCoroutine(DisplayTextsSequentially(notSoldDialouge, 0, () =>
         {
-            dialougeCanvas.enabled = false;
+            dialougePanel.gameObject.SetActive(false);
             shopPanel.gameObject.SetActive(true);
 
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }));
+    }
+
+    public void ExitShopDialouge()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        string justwordsatthispointguysidk = "Hope you got what you need";
+        string[] exitShop = {justwordsatthispointguysidk};
+
+        StartCoroutine(DisplayTextsSequentially(exitShop, 0, () =>
+        {
+            WhatsNextDialouge();
         }));
     }
 

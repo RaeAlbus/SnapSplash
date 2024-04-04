@@ -48,11 +48,6 @@ public class ShopKeeperBehavior : MonoBehaviour
             // Starts outro dialouge
             ShopKeeperUI.Instance.ExitDialouge();
         }
-
-        if (Input.GetKeyDown(KeyCode.E) && inShop)
-        {
-            SellFishPics();
-        }
     }
 
     public void SellFishPics()

@@ -18,10 +18,10 @@ public class LevelManager : MonoBehaviour
 
     // The total amount of air the player has for this level at the start
     [Header("Level Info")]
-    public float totalAir = 20f;
+    public static float totalAir = 20f;
 
     // Amount of air left at this second in level
-    private float airLeft;
+    public static float airLeft;
 
     // Whether or not level is over
     public static bool isLevelLost;
@@ -40,9 +40,6 @@ public class LevelManager : MonoBehaviour
 
     // Current depth of player at this second 
     private float currentDepth;
-
-    // Inventory of the player
-    public List<Item> inventory = new List<Item>();
 
     // References to UI Elements
     [Header("UI Elements")]
@@ -92,6 +89,7 @@ public class LevelManager : MonoBehaviour
             UpdateAir();
             //TODO: UpdateDepth();
         }
+        
         UpdateUI();
     }
 

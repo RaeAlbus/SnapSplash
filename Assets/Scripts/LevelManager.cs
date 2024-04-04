@@ -63,6 +63,7 @@ public class LevelManager : MonoBehaviour
     public Vector3 OceanSpawnPos;
     public Vector3 SurfaceSpawnPos;
     public Vector3 SurfaceSpawnRot;
+    public Vector3 MidLevelOceanSpawnPos;
 
     // the amount of money player will receive from selling fish
     public static float totalFishValue;
@@ -75,7 +76,8 @@ public class LevelManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         OceanSpawnPos = new Vector3(3.2f, -1.3f, 2.2f);
         SurfaceSpawnPos = new Vector3(-218.1f, 3.84f, 135.3f);
-        SurfaceSpawnRot = new Vector3(0f, -335.4f, 0f);
+        SurfaceSpawnRot = new Vector3(0f, -154.32f, 0f);
+        MidLevelOceanSpawnPos = new Vector3(-2.27f, 17.62f, 1.67f);
 
         InitSurfaceLevel();
 
@@ -131,6 +133,57 @@ public class LevelManager : MonoBehaviour
         UseSurfaceUI();
     }
 
+    void InitMidLevelOcean()
+    {
+
+        player.transform.position = MidLevelOceanSpawnPos;
+        LoadMidLevelOcean();
+        Invoke("FindFish", 1f);
+    }
+
+    void InitShallowOcean()
+    {
+        player.transform.position = OceanSpawnPos;
+        LoadShallowOcean();
+        Invoke("FindFish", 1f);
+    }
+
+    void InitDeepOcean()
+    {
+        player.transform.position = OceanSpawnPos;
+        LoadDeepOcean();
+        Invoke("FindFish", 1f);
+    }
+
+    public void LoadUpLevelOcean()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName == "MidLevelOcean")
+        {
+            InitShallowOcean();
+        }
+        else if (sceneName == "DeepOcean")
+        {
+            InitMidLevelOcean();
+        }
+    }
+
+    public void LoadDownLevelOcean()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        print(sceneName);
+
+        if (sceneName == "ShallowOcean")
+        {
+            InitMidLevelOcean();
+        }
+        else if (sceneName == "MidLevelOcean")
+        {
+            InitDeepOcean();
+        }
+    }
+
     void LevelOver()
     {
         // Go back for air and switch scenes
@@ -149,7 +202,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            LoadOcean();
+            LoadShallowOcean();
             InitOceanLevel();
             Invoke("FindFish", 1f);
         }
@@ -160,10 +213,21 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene("Surface");
     }
 
-    private void LoadOcean()
+    private void LoadShallowOcean()
     {
         SceneManager.LoadScene("ShallowOcean");
     }
+
+    private void LoadMidLevelOcean()
+    {
+        SceneManager.LoadScene("MidLevelOcean");
+    }
+
+    private void LoadDeepOcean()
+    {
+        SceneManager.LoadScene("DeepOcean");
+    }
+
 
     //-------------------------------------------------------------UI FUNCTIONALITY---------------------------------------------------------
 

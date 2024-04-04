@@ -7,6 +7,8 @@ TagManager:
   - Fish
   - FishMovementPoints
   - Shark
+  - DownwardsBarrier
+  - UpwardsBarrier
   layers:
   - Default
   - TransparentFX

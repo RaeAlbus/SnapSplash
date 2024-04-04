@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class LevelManager : MonoBehaviour
 
     // The total amount of air the player has for this level at the start
     [Header("Level Info")]
-    public static float totalAir = 20f;
+    public static float totalAir = 30f;
 
     // Amount of air left at this second in level
     public static float airLeft;
@@ -35,7 +36,7 @@ public class LevelManager : MonoBehaviour
     // Money the player has earned from selling fish
     public static float money;
 
-    // Maximum depth for this level
+    // Current Maximum depth player can go to
     public float maxDepth;
 
     // Current depth of player at this second 
@@ -44,6 +45,7 @@ public class LevelManager : MonoBehaviour
     // References to UI Elements
     [Header("UI Elements")]
     public Slider airUI;
+    public Text warningText;
     public Text storageUI;
     public Text storageUICamera;
     public Text storageUISurface;
@@ -80,16 +82,17 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
+        maxDepth = -18f;
     }
 
     void Update()
     {
-        if(isDiving && !isLevelLost)
+        if (isDiving && !isLevelLost)
         {
             UpdateAir();
-            //TODO: UpdateDepth();
+            UpdateDepth();
         }
-        
+
         UpdateUI();
     }
 
@@ -111,11 +114,11 @@ public class LevelManager : MonoBehaviour
     {
         // Plays splash sfx only if going to surface from
         // previously diving
-        if(isDiving)
+        if (isDiving)
         {
             SoundManager.Instance.PlaySplashSFX();
         }
-        
+
         isDiving = false;
         airLeft = totalAir;
         isLevelLost = false;
@@ -164,7 +167,7 @@ public class LevelManager : MonoBehaviour
 
     void UpdateUI()
     {
-        depthUI.text = "" + currentDepth;
+        depthUI.text = "" + Mathf.Abs(Mathf.Floor(currentDepth));
         airUI.value = airLeft / totalAir;
         storageUI.text = "" + storageLeft;
         storageUICamera.text = "" + storageLeft;
@@ -184,6 +187,26 @@ public class LevelManager : MonoBehaviour
             playerCanvas.GetComponent<Canvas>().enabled = false;
             isLevelLost = true;
             LevelOver();
+        }
+    }
+
+    void UpdateDepth()
+    {
+        currentDepth = player.transform.position.y - OceanSpawnPos.y;
+        if (currentDepth < maxDepth)
+        {
+            playerCanvas.GetComponent<Canvas>().enabled = false;
+            isLevelLost = true;
+            LevelOver();
+        }
+        else if (Mathf.Abs(maxDepth) - Mathf.Abs(currentDepth) <= 5)
+        {
+            warningText.gameObject.SetActive(true);
+            warningText.text = "Youre too deep! Go back up!";
+        }
+        else
+        {
+           warningText.gameObject.SetActive(false);
         }
     }
 

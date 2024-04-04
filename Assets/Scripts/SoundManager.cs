@@ -100,14 +100,14 @@ public class SoundManager : MonoBehaviour
 
     public void PlayWalkingSFX()
     {
-        ambientSource.volume = 0.1;
+        ambientSource.volume = 0.1f;
         ambientSource.clip = sandFootstepsSFX;
     }
 
     public void StopWalkingSFX()
     {
         ambientSource.clip = sandFootstepsSFX;
-        ambientSource.volume = 0.25;
+        ambientSource.volume = 0.25f;
     }
 
     public void PlayBreathingSFX()

@@ -40,24 +40,43 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    private Coroutine bubbleCoroutine;
+
     void Update()
     {
         // Starts BG music for surface/ocean
         PlayBGMusic();
 
-      /*  // Plays walking sound effect on surface when input is detected
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) && !isPlaying && !LevelManager.isDiving)
+        // Plays bubble sounds repeatedly only if underwater
+        if(LevelManager.isDiving)
         {
-            StartCoroutine(PlayRandomizedAudioCoroutine());
+            if(bubbleCoroutine == null)
+            {
+                bubbleCoroutine = StartCoroutine(PlayOceanBubbleSFXCoroutine());
+            }
         }
-        else if(isPlaying && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+        else
         {
-            StopSandFootsteps();
+            // If not diving --> stop playing bubbles / start walking sound
+            if(bubbleCoroutine != null)
+            {
+                StopCoroutine(bubbleCoroutine);
+                bubbleCoroutine = null;
+            }
+
+            // Plays walking sound effect on surface when input is detected
+            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) && !isPlaying && !LevelManager.isDiving)
+            {
+                StartCoroutine(PlaySandFootStepsCoroutine());
+            }
+            else if(isPlaying && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
+            {
+                StopSandFootsteps();
+            }
         }
-        */
     }
 
-    IEnumerator PlayRandomizedAudioCoroutine()
+    IEnumerator PlaySandFootStepsCoroutine()
     {
         isPlaying = true;
         float timer = 0f;
@@ -73,13 +92,27 @@ public class SoundManager : MonoBehaviour
 
             ambientSource.Play();
 
+            // Wait for the clip to finish playing
             yield return new WaitForSecondsRealtime(ambientSource.clip.length / 1.2f);
-            timer += ambientSource.clip.length / 1.2f;
+
+            // Update the timer based on the actual time elapsed
+            timer += Time.deltaTime;
         }
 
         // Reset pitch to normal/bool to false to reset source
         ambientSource.pitch = 1f;
         isPlaying = false;
+    }
+
+    // Plays bubble sounds every 8-12 seconds
+
+    IEnumerator PlayOceanBubbleSFXCoroutine()
+    {
+        while(LevelManager.isDiving)
+        {
+            PlayOceanBubbleSFX();
+            yield return new WaitForSeconds(Random.Range(8f, 10f));
+        }
     }
 
     public void StopSandFootsteps()

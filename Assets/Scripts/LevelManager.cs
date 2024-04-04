@@ -109,6 +109,13 @@ public class LevelManager : MonoBehaviour
 
     void InitSurfaceLevel()
     {
+        // Plays splash sfx only if going to surface from
+        // previously diving
+        if(isDiving)
+        {
+            SoundManager.Instance.PlaySplashSFX();
+        }
+        
         isDiving = false;
         airLeft = totalAir;
         isLevelLost = false;

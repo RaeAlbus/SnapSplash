@@ -8,6 +8,14 @@ using System;
 
 public class LevelManager : MonoBehaviour
 {
+    private enum Level // Added 'enum' keyword to declare an enumeration
+    {
+        ShallowOcean,
+        MidLevelOcean,
+        DeepOcean,
+        Surface
+    }
+    
     // Singleton instance of the LevelManager
     private static LevelManager _instance;
 
@@ -26,6 +34,9 @@ public class LevelManager : MonoBehaviour
 
     // Whether or not level is over
     public static bool isLevelLost;
+
+    //What level the player is currently on
+    private Level currentLevel;
 
     // Total amount of pics the player can hold at once
     public static int totalStorage = 16;
@@ -82,7 +93,8 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
-        maxDepth = -18f;
+        maxDepth = -80f;
+        currentLevel = Level.Surface;
     }
 
     void Update()
@@ -113,6 +125,7 @@ public class LevelManager : MonoBehaviour
         isDiving = true;
         airLeft = totalAir;
         isLevelLost = false;
+        currentLevel = Level.ShallowOcean;
         TeleportPlayer(shallowTopSpawn);
         SoundManager.Instance.PlaySplashSFX();
         SoundManager.Instance.StopWalkingSFX();
@@ -144,6 +157,7 @@ public class LevelManager : MonoBehaviour
         airLeft = totalAir;
         isLevelLost = false;
         TeleportPlayer(surfaceAnchorSpawn);
+        currentLevel = Level.Surface;
         SoundManager.Instance.StopBreathingSFX();
         SoundManager.Instance.PlayWalkingSFX();
 
@@ -160,6 +174,7 @@ public class LevelManager : MonoBehaviour
             TeleportPlayer(midBotSpawn);
         }
         LoadMidLevelOcean();
+        currentLevel = Level.MidLevelOcean;
         Invoke("FindFish", 0.5f);
     }
 
@@ -173,6 +188,7 @@ public class LevelManager : MonoBehaviour
             TeleportPlayer(shallowBotSpawn);
         }
         LoadShallowOcean();
+        currentLevel = Level.ShallowOcean;
         Invoke("FindFish", 0.5f);
     }
 
@@ -180,6 +196,7 @@ public class LevelManager : MonoBehaviour
     {
         TeleportPlayer(shallowTopSpawn);
         LoadDeepOcean();
+        currentLevel = Level.DeepOcean;
         Invoke("FindFish", 0.5f);
     }
 
@@ -218,6 +235,7 @@ public class LevelManager : MonoBehaviour
         totalFishValue = 0;
         storageLeft = totalStorage;
         Invoke("SwitchScene", 1);
+        
     }
 
     public void SwitchScene()
@@ -285,15 +303,34 @@ public class LevelManager : MonoBehaviour
 
     void UpdateDepth()
     {
-        currentDepth = player.transform.position.y - shallowTopSpawn.transform.position.y;
+        //offset by for how deep the water is
+        if (currentLevel == Level.ShallowOcean)
+        {
+            currentDepth = player.transform.position.y - shallowTopSpawn.transform.position.y;
+        }
+        else if (currentLevel == Level.MidLevelOcean)
+        {
+            currentDepth = player.transform.position.y - midTopSpawn.transform.position.y - 20f;
+        }
+        else if (currentLevel == Level.DeepOcean)
+        {
+            currentDepth = player.transform.position.y - deepTopSpawn.transform.position.y - 40f;
+        }
+        else
+        {
+            currentDepth = 0;
+        }
+        
+        // If player is too deep, they lose
         if (currentDepth < maxDepth)
         {
             playerCanvas.GetComponent<Canvas>().enabled = false;
             isLevelLost = true;
             LevelOver();
         }
-        else if (Mathf.Abs(maxDepth) - Mathf.Abs(currentDepth) <= 5)
+        else if (currentDepth <= maxDepth + 5f)
         {
+            // Warn player that they are getting too deep
             warningText.gameObject.SetActive(true);
             warningText.text = "Youre too deep! Go back up!";
         }

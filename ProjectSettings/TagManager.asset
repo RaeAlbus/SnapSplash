@@ -9,6 +9,7 @@ TagManager:
   - Shark
   - DownwardsBarrier
   - UpwardsBarrier
+  - Anchor
   layers:
   - Default
   - TransparentFX

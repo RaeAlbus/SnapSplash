@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Linq;
 
 public class Shop : MonoBehaviour
 {
@@ -10,16 +12,62 @@ public class Shop : MonoBehaviour
 
     // Everything this shop has ever sold/is selling
     public List<Item> stock = new List<Item>();
+    public List<Sprite> icons = new List<Sprite>();
+
+    public float spacing = 1f;
 
     // Current button that has been pressed in shop
     private GameObject buttonObject;
 
     void Start()
     {
-        stock.Add(new Item("40 Air", 450.0f));
-        stock.Add(new Item("60 Air", 600.0f));
-        stock.Add(new Item("20 Storage", 300.0f));
-        stock.Add(new Item("24 Storage", 500.0f));
+        stock.Add(new Item("SD Card\n(+Storage)", 450.0f, icons.FirstOrDefault(sprite => sprite.name == "StorageIcon")));
+        stock.Add(new Item("Air Tank\n(+Time)", 600.0f, icons.FirstOrDefault(sprite => sprite.name == "AirIcon")));
+        stock.Add(new Item("Depth Gauge\n(+Unlock Level)", 300.0f, icons.FirstOrDefault(sprite => sprite.name == "DepthIcon")));
+        stock.Add(new Item("Fins\n(+Speed)", 500.0f, icons.FirstOrDefault(sprite => sprite.name == "FinsIcon")));
+        stock.Add(new Item("Flashlight\n(Item)", 500.0f, icons.FirstOrDefault(sprite => sprite.name == "FlashlightIcon")));
+        GenerateShop();
+    }
+
+    public void GenerateShop()
+    {
+        Transform panelTransform = transform.Find("ShopBG");
+        Vector2 itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta;
+
+        float totalWidth =  stock.Count * itemSize.x + (stock.Count - 1) * spacing;
+        float startX = -totalWidth / 2f + itemSize.x / 2f;
+
+        for (int i = 0; i <  stock.Count; i++)
+        {
+            if(!stock[i].hasBought)
+            {
+                // Calculate the position for the current button
+                Vector3 position = new Vector3(startX + i * (itemSize.x + spacing), -50f, 0f);
+
+                // Instantiate the button at the calculated position
+                GameObject buttonInstance = Instantiate(itemPrefab, panelTransform.position + position, Quaternion.identity);
+                buttonInstance.name = stock[i].name;
+                buttonInstance.transform.SetParent(panelTransform);
+
+                TextMeshProUGUI nameText = buttonInstance.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+                nameText.text = stock[i].name;
+
+                TextMeshProUGUI priceText = buttonInstance.transform.Find("Price").GetComponent<TextMeshProUGUI>();
+                priceText.text = "$" + stock[i].price.ToString();
+
+                Image icon = buttonInstance.transform.Find("Image").GetComponent<Image>();
+                icon.sprite = stock[i].icon;
+
+                Button button = buttonInstance.GetComponent<Button>();
+                button.onClick.AddListener(() => OnButtonClick(button));
+            }
+        }
+
+    }
+
+    void OnButtonClick(Button clickedButton)
+    {
+        BuyItem(clickedButton.gameObject.name);
     }
 
     public void BuyItem(string name)
@@ -63,6 +111,8 @@ public class Shop : MonoBehaviour
                     Invoke("ResetButton", 1.0f);
                     return;
                 }
+
+                break;
             }
         }
 
@@ -83,24 +133,36 @@ public class Shop : MonoBehaviour
     // the appropriate methods
     public void UpdateValues(Item item)
     {
-        string[] itemVals = item.name.Split(' ');
-        string name = itemVals[1];
-        int value = int.Parse(itemVals[0]);
-        
-        if(name == "Air")
+        string[] itemVals = item.name.Split('\n');
+        string name = itemVals[0];
+        Debug.Log(name);
+
+        switch (name)
         {
-            // Only update if it is increasing your air
-            if(LevelManager.totalAir < value){
-                LevelManager.totalAir = value;
-            }
-        }
-        else if(name == "Storage")
-        {
-            // Only update if it is increasing your storage
-            if(LevelManager.totalStorage < value){
-                LevelManager.storageLeft += (value - LevelManager.totalStorage);
-                LevelManager.totalStorage = value;
-            }
+            case "SD Card":
+                LevelManager.storageLeft += 4;
+                LevelManager.totalStorage += 4;
+                break;
+
+            case "Air Tank":
+                LevelManager.totalAir += 20;
+                break;
+
+            case "Depth Gauge":
+                LevelManager.maxDepth -= 40;
+                break;
+
+            case "Fins":
+                PlayerController.movementSpeedUnderwater += 2f;
+                break;
+
+            case "Flashlight":
+                LevelManager.hasFlashlight = true;
+                item.hasBought = true;
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -110,12 +172,14 @@ public class Item
 {
     public string name;
     public float price;
+    public Sprite icon;
     public bool hasBought;
 
-    public Item(string name, float price)
+    public Item(string name, float price, Sprite icon)
     {
         this.name = name;
         this.price = price;
+        this.icon = icon;
         this.hasBought = false;
     }
 }

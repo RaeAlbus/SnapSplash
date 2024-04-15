@@ -64,7 +64,7 @@ public class SoundManager : MonoBehaviour
 
             
             // If walking --> play footsteps sound
-            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) && !ShopKeeperBehavior.inShop)
             {
                 ambientSource.enabled = true;
             }
@@ -100,7 +100,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayWalkingSFX()
     {
-        ambientSource.volume = 0.1f;
+        ambientSource.volume = 0.05f;
         ambientSource.clip = sandFootstepsSFX;
     }
 

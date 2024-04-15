@@ -46,10 +46,16 @@ public class LevelManager : MonoBehaviour
     public static int storageLeft;
 
     // Money the player has earned from selling fish
-    public static float money;
+    public static float money = 10000;
 
     // Current Maximum depth player can go to
-    public float maxDepth;
+    public static float maxDepth;
+
+    // Whether or not the player has bought the flashlight
+    public static bool hasFlashlight = false;
+
+    // Whether or not the player is using flashlight
+    public bool flashlightOn;
 
     // Current depth of player at this second 
     private float currentDepth;

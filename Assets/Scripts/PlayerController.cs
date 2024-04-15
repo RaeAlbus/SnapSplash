@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     [Header("Underwater")]
-    public float movementSpeedUnderwater = 3f;
+    public static float movementSpeedUnderwater = 3f;
     public float agilityUnderwater = 3;
 
     [Header("Abovewater")]
@@ -37,22 +37,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!LevelManager.isDiving)
+        if(!ShopKeeperBehavior.inShop)
         {
-            ControlPlayerAbovewater();
-        } else
-        {
-            if (!LevelManager.isLevelLost)
+            if (!LevelManager.isDiving)
             {
-                ControlPlayerUnderwater();
-            }
+                ControlPlayerAbovewater();
+            } 
             else
             {
-                // have the player start falling
-                characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
+                if (!LevelManager.isLevelLost)
+                {
+                    ControlPlayerUnderwater();
+                }
+                else
+                {
+                    // have the player start falling
+                    characterController.Move(Vector3.down * fallSpeed * Time.deltaTime);
 
-                // rotate the player like they are passing out
-                transform.Rotate(Vector3.right, rotationSpeed * Time.deltaTime);
+                    // rotate the player like they are passing out
+                    transform.Rotate(Vector3.right, rotationSpeed * Time.deltaTime);
+                }
             }
         }
     }

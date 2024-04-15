@@ -1,4 +1,4 @@
-using System.Collections;
+  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,14 +8,15 @@ public class ShopKeeperBehavior : MonoBehaviour
     public static GameObject player;
 
     // How far away player must be to trigger "shopping state"
-    public float distanceToEnter = 5f;
+    public float distanceToEnter = 2f;
 
     // Current distance from shopkeeper to player
     private float distanceToPlayer;
 
     // Triggered when player is within distanceToEnter
-    private bool inShop;
+    public static bool inShop;
     
+    // ShopKepper animator
     private Animator anim;
 
     void Start()
@@ -24,13 +25,14 @@ public class ShopKeeperBehavior : MonoBehaviour
         anim = GetComponent<Animator>();
 
         anim.SetInteger("animState", 0);
+        inShop = false;
     }
 
     void Update()
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        if(distanceToPlayer <= distanceToEnter && !inShop)
+        if(distanceToPlayer <= distanceToEnter && Input.GetKeyDown(KeyCode.E) && !inShop)
         {
             // Initializes waving animation
             anim.SetInteger("animState", 1);
@@ -39,7 +41,7 @@ public class ShopKeeperBehavior : MonoBehaviour
             // Starts the introduction dialouge
             ShopKeeperUI.Instance.InitDialouge();
         } 
-        else if(distanceToPlayer > distanceToEnter && inShop)
+        else if(!inShop)
         {
             // Reverts back to idle animation
             anim.SetInteger("animState", 0);
@@ -64,7 +66,6 @@ public class ShopKeeperBehavior : MonoBehaviour
         else 
         {
             ShopKeeperUI.Instance.NoFishDialouge();
-
             SoundManager.Instance.PlayNoStorageSFX();
         }
     }

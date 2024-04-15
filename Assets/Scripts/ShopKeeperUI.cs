@@ -22,13 +22,10 @@ public class ShopKeeperUI : MonoBehaviour
     public TextMeshProUGUI dialougeText;
     public Canvas dialougeCanvas;
     public TextMeshProUGUI clickToContinueText;
-    public TextMeshProUGUI clickToContinueText2;
     public Button sellBtn;
     public Button buyBtn;
     public Image dialougePanel;
     public Image shopPanel;
-    
-    private bool currTalking;
 
     private void Start()
     {
@@ -42,59 +39,45 @@ public class ShopKeeperUI : MonoBehaviour
             Destroy(gameObject);
         }
 
-        currTalking = false;
-        dialougeCanvas.enabled = false;
+        dialougeCanvas.gameObject.SetActive(false);
 
     }
 
     public void InitDialouge()
     {
-        // Go into dialouge mode and show dialouge box
-        currTalking = true;
-        dialougeCanvas.enabled = true;
+        // Show cursor and show dialouge box
+        SetMouseFree(true);
+        dialougeCanvas.gameObject.SetActive(true);
 
-        // Hidden until triggered to appear
-        clickToContinueText.enabled = false;
-        shopPanel.gameObject.SetActive(false);
+        // Hide these btns until the right dialouge prompts them on
+        clickToContinueText.gameObject.SetActive(false);
         sellBtn.gameObject.SetActive(false);
         buyBtn.gameObject.SetActive(false);
 
+        // Start dialouge coroutine
         StartCoroutine(DisplayTextsSequentially(initTexts, 0, () =>
         {
-            clickToContinueText.enabled = false;
-
+            // Show sell/buy btns to prompt user once coroutine ends
             sellBtn.gameObject.SetActive(true);
             buyBtn.gameObject.SetActive(true);
-
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
         }));
     }
 
     public void ExitDialouge()
     {
-        currTalking = true;
-        dialougeCanvas.enabled = true;
-        clickToContinueText.enabled = false;
+        Debug.Log("b");
+        // Hide cursor
+        SetMouseFree(false);
 
-        StartCoroutine(DisplayTextsSequentially(exitTexts, 0, () =>
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
-            dialougeCanvas.enabled = false;
-        }));
+        // Turn off all UI elements to avoid it showing up when rentering dialouge
+        ShopKeeperBehavior.inShop = false;
+        dialougeCanvas.gameObject.SetActive(false);
     }
 
     public void SoldFishDialouge(float money)
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         string moneyString = money.ToString("F2");
-        string howMuchSold = "Wow! These are some nice photos! Here's $" + moneyString + " for them";
-        string end = "Pleasure doing business with ya!";
-        string[] soldDialouge = {howMuchSold, end};
+        string[] soldDialouge = {"Wow! These are some nice photos! Here's $" + moneyString + " for them", "Pleasure doing business with ya!"};
 
         StartCoroutine(DisplayTextsSequentially(soldDialouge, 0, () =>
         {
@@ -104,12 +87,7 @@ public class ShopKeeperUI : MonoBehaviour
 
     public void NoFishDialouge()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        string error = "Oh looks like you don't have any photos to sell me";
-        string instructions = "Why don't you go down under again? I'll wait here!";
-        string[] notSoldDialouge = {error, instructions};
+        string[] notSoldDialouge = {"Oh looks like you don't have any photos to sell me", "Why don't you go down under again? I'll wait here!"};
 
         StartCoroutine(DisplayTextsSequentially(notSoldDialouge, 0, () =>
         {
@@ -119,33 +97,22 @@ public class ShopKeeperUI : MonoBehaviour
 
     public void BuyItemDialouge()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        string error = "Great! You came to the right place";
-        string instructions = "I'll open up my shop, just click on what catches your eye";
-        string[] notSoldDialouge = {error, instructions};
+        string[] notSoldDialouge = {"Great! You came to the right place"}; //, "I'll open up my shop, just click on what catches your eye"};
 
         StartCoroutine(DisplayTextsSequentially(notSoldDialouge, 0, () =>
         {
             dialougePanel.gameObject.SetActive(false);
             shopPanel.gameObject.SetActive(true);
-
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
         }));
     }
 
     public void ExitShopDialouge()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         dialougePanel.gameObject.SetActive(true);
         shopPanel.gameObject.SetActive(false);
 
-        string justwordsatthispointguysidk = "Hope you got what you need";
-        string[] exitShop = {justwordsatthispointguysidk};
+        string leftShopDialouge = "Hope you got what you need";
+        string[] exitShop = {leftShopDialouge};
 
         StartCoroutine(DisplayTextsSequentially(exitShop, 0, () =>
         {
@@ -155,28 +122,26 @@ public class ShopKeeperUI : MonoBehaviour
 
     public void WhatsNextDialouge()
     {
-        dialougePanel.enabled = true;
         string prompt = "So, what are you interested in doing today?";
         string[] whatsNext = {prompt};
 
         StartCoroutine(DisplayTextsSequentially(whatsNext, 0, () =>
         {
-            clickToContinueText.enabled = false;
-
             sellBtn.gameObject.SetActive(true);
             buyBtn.gameObject.SetActive(true);
-
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
         }));
     }
 
-    private IEnumerator DisplayTextsSequentially(string[] texts, int index, Action onComplete)
-    {
-        if (index >= texts.Length)
+   private IEnumerator DisplayTextsSequentially(string[] texts, int index, Action onComplete)
+   {
+        // Hide all non dialouge UI objects when speaking
+        clickToContinueText.gameObject.SetActive(false);
+        shopPanel.gameObject.SetActive(false);
+        sellBtn.gameObject.SetActive(false);
+        buyBtn.gameObject.SetActive(false);
+
+        if(index >= texts.Length)
         {
-            // All texts displayed, stop dialogue
-            currTalking = false;
             onComplete?.Invoke();
             yield break;
         }
@@ -184,33 +149,34 @@ public class ShopKeeperUI : MonoBehaviour
         dialougeText.text = texts[index];
         dialougeText.maxVisibleCharacters = 0;
 
-        bool displayAllText = false;
-        while (!displayAllText && dialougeText.maxVisibleCharacters < texts[index].Length)
+        foreach(char letter in texts[index].ToCharArray())
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                // Display the entire text if the player left-clicks
-                dialougeText.maxVisibleCharacters = texts[index].Length;
-                displayAllText = true;
-            }
-            else
-            {
-                dialougeText.maxVisibleCharacters++;
-            }
-
+            //PlayDialougeSound(dialougeText.maxVisibleCharacters);
+            dialougeText.maxVisibleCharacters++;
             yield return new WaitForSeconds(0.05f);
         }
 
-        clickToContinueText.enabled = true;
-
-        while (!Input.GetMouseButtonDown(0))
-        {
-            yield return null;
-        }
-
-        clickToContinueText.enabled = false;
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        // Prompts user to left-click to go to next line
+        clickToContinueText.gameObject.SetActive(true);
+        // Waits for left-click
+        yield return new WaitUntil(() => Input.GetMouseButton(0));
+        // Goes to next line
         StartCoroutine(DisplayTextsSequentially(texts, index + 1, onComplete));
+   }
+
+    public void SetMouseFree(bool mouseMode)
+    {
+        // if true --> set mouse free
+        if(mouseMode)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
 }

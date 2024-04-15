@@ -27,7 +27,8 @@ public class LevelManager : MonoBehaviour
 
     // The total amount of air the player has for this level at the start
     [Header("Level Info")]
-    public static float totalAir = 30f;
+    //TODO: Change this to 30f
+    public static float totalAir = 80f;
 
     // Amount of air left at this second in level
     public static float airLeft;
@@ -93,7 +94,7 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
-        maxDepth = -80f;
+        maxDepth = -130f;
         currentLevel = Level.Surface;
     }
 
@@ -194,7 +195,7 @@ public class LevelManager : MonoBehaviour
 
     void InitDeepOcean()
     {
-        TeleportPlayer(shallowTopSpawn);
+        TeleportPlayer(deepTopSpawn);
         LoadDeepOcean();
         currentLevel = Level.DeepOcean;
         Invoke("FindFish", 0.5f);
@@ -314,7 +315,7 @@ public class LevelManager : MonoBehaviour
         }
         else if (currentLevel == Level.DeepOcean)
         {
-            currentDepth = player.transform.position.y - deepTopSpawn.transform.position.y - 40f;
+            currentDepth = player.transform.position.y - deepTopSpawn.transform.position.y - 60f;
         }
         else
         {

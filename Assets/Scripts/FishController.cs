@@ -17,6 +17,7 @@ public class FishController : MonoBehaviour
 
     private Vector3 nextDestination;
 
+    private bool photographed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -62,5 +63,15 @@ public class FishController : MonoBehaviour
     {
         isMoving = false;
         StartCoroutine(Swim());
+    }
+
+    public void MarkAsPhotographed()
+    {
+        photographed = true;
+    }
+
+    public bool IsPhotographed()
+    {
+        return photographed;
     }
 }

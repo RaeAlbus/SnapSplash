@@ -33,6 +33,8 @@ public class SharkAI : MonoBehaviour
     float elapsedTime;
     float biteRate;
 
+    bool photographed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -165,6 +167,16 @@ public class SharkAI : MonoBehaviour
             currentState = FSMStates.Stunned;
             elapsedTime = 0.0f;
         }
+    }
+
+    public void MarkAsPhotographed()
+    {
+        photographed = true;
+    }
+
+    public bool IsPhotographed()
+    {
+        return photographed;
     }
 
     private void OnDrawGizmos()

@@ -35,6 +35,8 @@ public class SharkAI : MonoBehaviour
 
     bool photographed = false;
 
+    bool playerInSight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,7 +79,7 @@ public class SharkAI : MonoBehaviour
         {
             FindNextPoint();
         }
-        else if (distanceToPlayer <= chaseDistance)
+        else if (playerInSight)
         {
             currentState = FSMStates.Chase;
         }
@@ -97,7 +99,7 @@ public class SharkAI : MonoBehaviour
         {
             currentState = FSMStates.Attack;
         }
-        else if (distanceToPlayer > chaseDistance)
+        else if (!playerInSight)
         {
             currentState = FSMStates.Patrol;
         }
@@ -116,7 +118,7 @@ public class SharkAI : MonoBehaviour
         {
             currentState = FSMStates.Chase;
         }
-        else if (distanceToPlayer > chaseDistance)
+        else if (!playerInSight)
         {
             currentState = FSMStates.Patrol;
         }
@@ -179,13 +181,19 @@ public class SharkAI : MonoBehaviour
         return photographed;
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackDistance);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        if (other.CompareTag("Player"))
+        {
+            playerInSight = true;
+        }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInSight = false;
+        }
+    }
 }

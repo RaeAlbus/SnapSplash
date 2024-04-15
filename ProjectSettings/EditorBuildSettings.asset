@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MidLevelOcean.unity
     guid: 3df8f7a977310da4381a5b9617e54de8
+  - enabled: 1
+    path: Assets/Scenes/DeepOcean.unity
+    guid: 40f9cc28578a0514cb1c6dd044c7a5b1
   m_configObjects: {}

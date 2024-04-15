@@ -22,10 +22,11 @@ public class Shop : MonoBehaviour
     void Start()
     {
         stock.Add(new Item("SD Card\n(+Storage)", 450.0f, icons.FirstOrDefault(sprite => sprite.name == "StorageIcon")));
-        stock.Add(new Item("Air Tank\n(+Time)", 600.0f, icons.FirstOrDefault(sprite => sprite.name == "StorageIcon")));
-        stock.Add(new Item("Depth Gauge\n(+Unlock Level)", 300.0f, icons.FirstOrDefault(sprite => sprite.name == "StorageIcon")));
-        stock.Add(new Item("Fins\n(+Speed)", 500.0f, icons.FirstOrDefault(sprite => sprite.name == "StorageIcon")));
-        stock.Add(new Item("Flashlight\n(Item)", 500.0f, icons.FirstOrDefault(sprite => sprite.name == "StorageIcon")));
+        stock.Add(new Item("Air Tank\n(+Time)", 600.0f, icons.FirstOrDefault(sprite => sprite.name == "AirIcon")));
+        stock.Add(new Item("Depth Gauge\n(+Unlock Level)", 300.0f, icons.FirstOrDefault(sprite => sprite.name == "DepthIcon")));
+        stock.Add(new Item("Fins\n(+Speed)", 500.0f, icons.FirstOrDefault(sprite => sprite.name == "FinsIcon")));
+        stock.Add(new Item("Flashlight\n(Item)", 500.0f, icons.FirstOrDefault(sprite => sprite.name == "FlashlightIcon")));
+        GenerateShop();
     }
 
     public void GenerateShop()

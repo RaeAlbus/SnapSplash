@@ -39,12 +39,13 @@ public class ShopKeeperUI : MonoBehaviour
             Destroy(gameObject);
         }
 
-        dialougeCanvas.gameObject.SetActive(false);
+        //dialougeCanvas.gameObject.SetActive(false);
 
     }
 
     public void InitDialouge()
     {
+        Debug.Log("init dialouge");
         // Show cursor and show dialouge box
         SetMouseFree(true);
         dialougeCanvas.gameObject.SetActive(true);
@@ -65,7 +66,6 @@ public class ShopKeeperUI : MonoBehaviour
 
     public void ExitDialouge()
     {
-        Debug.Log("b");
         // Hide cursor
         SetMouseFree(false);
 

@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
         DeepOcean,
         Surface
     }
-    
+
     // Singleton instance of the LevelManager
     private static LevelManager _instance;
 
@@ -64,6 +64,7 @@ public class LevelManager : MonoBehaviour
     [Header("UI Elements")]
     public Slider airUI;
     public Text warningText;
+    public Text surfaceTooltip;
     public Text storageUI;
     public Text storageUICamera;
     public Text storageUISurface;
@@ -104,7 +105,7 @@ public class LevelManager : MonoBehaviour
         // Conditions for surface level only set at start of game
         _instance = this;
         storageLeft = totalStorage;
-        maxDepth = -130f;
+        maxDepth = -20f;
         currentLevel = Level.Surface;
     }
 
@@ -115,7 +116,7 @@ public class LevelManager : MonoBehaviour
             UpdateAir();
             UpdateDepth();
         }
-
+        UpdateInteractableTooltip();
         UpdateUI();
     }
 
@@ -193,7 +194,8 @@ public class LevelManager : MonoBehaviour
         if (topSpawn)
         {
             TeleportPlayer(midTopSpawn);
-        } else
+        }
+        else
         {
             TeleportPlayer(midBotSpawn);
         }
@@ -207,7 +209,8 @@ public class LevelManager : MonoBehaviour
         if (topSpawn)
         {
             TeleportPlayer(shallowTopSpawn);
-        } else
+        }
+        else
         {
             TeleportPlayer(shallowBotSpawn);
         }
@@ -260,7 +263,7 @@ public class LevelManager : MonoBehaviour
         totalFishValue = 0;
         storageLeft = totalStorage;
         Invoke("SwitchScene", 1);
-        
+
     }
 
     public void LevelLost()
@@ -353,7 +356,7 @@ public class LevelManager : MonoBehaviour
         {
             currentDepth = 0;
         }
-        
+
         // If player is too deep, they lose
         if (currentDepth < maxDepth)
         {
@@ -369,7 +372,40 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-           warningText.gameObject.SetActive(false);
+            warningText.gameObject.SetActive(false);
+        }
+    }
+
+    public void UpdateInteractableTooltip()
+    {
+        GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable");
+        bool showTooltip = false;
+
+        foreach (GameObject interactable in interactables)
+        {
+            if (Vector3.Distance(player.transform.position, interactable.transform.position) < 5f)
+            {
+                showTooltip = true;
+            }
+        }
+        
+        if (showTooltip)
+        {
+            if (currentLevel == Level.Surface && !ShopKeeperBehavior.inShop)
+            {
+                surfaceTooltip.gameObject.SetActive(true);
+                surfaceTooltip.text = "Press 'E' to interact";
+            }
+            else
+            {
+                warningText.gameObject.SetActive(true);
+                warningText.text = "Press 'E' to interact";
+            }
+        }
+        else
+        {
+            surfaceTooltip.gameObject.SetActive(false);
+            warningText.gameObject.SetActive(false);
         }
     }
 

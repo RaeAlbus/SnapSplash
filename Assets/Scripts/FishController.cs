@@ -5,7 +5,7 @@ using UnityEngine;
 public class FishController : MonoBehaviour
 {
 
-    public float fishValue = 100.0f;
+    public int fishValue = 100;
 
     public float minPauseDuration = 5.0f;
 
@@ -68,6 +68,7 @@ public class FishController : MonoBehaviour
     public void MarkAsPhotographed()
     {
         photographed = true;
+        PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
     }
 
     public bool IsPhotographed()

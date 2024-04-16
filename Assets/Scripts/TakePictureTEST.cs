@@ -104,7 +104,6 @@ public class TakePictureTEST : MonoBehaviour
         {
             FishController fishController = objectToTakePictureOf.GetComponent<FishController>();
             SharkAI sharkAI = objectToTakePictureOf.GetComponent<SharkAI>();
-            SquidBehavior squidBehavior = objectToTakePictureOf.GetComponent<SquidBehavior>();
 
             if (fishController != null && !fishController.IsPhotographed())
             {

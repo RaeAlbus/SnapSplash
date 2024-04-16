@@ -41,7 +41,7 @@ public class ShopKeeperUI : MonoBehaviour
     public void InitDialouge()
     {
         // Show cursor and show dialouge box
-        SetMouseFree(true);
+      //  SetMouseFree(true);
         dialougeCanvas.gameObject.SetActive(true);
 
         // Hide these btns until the right dialouge prompts them on
@@ -147,7 +147,6 @@ public class ShopKeeperUI : MonoBehaviour
 
         foreach(char letter in texts[index].ToCharArray())
         {
-            //PlayDialougeSound(dialougeText.maxVisibleCharacters);
             dialougeText.maxVisibleCharacters++;
             yield return new WaitForSeconds(0.05f);
         }
@@ -160,7 +159,7 @@ public class ShopKeeperUI : MonoBehaviour
         StartCoroutine(DisplayTextsSequentially(texts, index + 1, onComplete));
    }
 
-    public void SetMouseFree(bool mouseMode)
+    public static void SetMouseFree(bool mouseMode)
     {
         // if true --> set mouse free
         if(mouseMode)

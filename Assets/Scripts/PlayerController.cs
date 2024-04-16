@@ -27,10 +27,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        // Assuming the camera is a child of the player
         playerCamera = GetComponentInChildren<Camera>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
         characterController = GetComponent<CharacterController>();
         rb = GetComponentInChildren<Rigidbody>();
         movementSpeedUnderwater = 20f;
@@ -71,7 +69,6 @@ public class PlayerController : MonoBehaviour
         input = (playerCamera.transform.right * horizontal + playerCamera.transform.forward * vertical).normalized;
         input *= movementSpeedUnderwater;
 
-        //rb.AddForce(movementDirection * movementSpeedUnderwater);
         moveDirectionUnderwater = Vector3.Lerp(moveDirectionUnderwater, input, agilityUnderwater * Time.deltaTime);
         characterController.Move(moveDirectionUnderwater * Time.deltaTime);
     }

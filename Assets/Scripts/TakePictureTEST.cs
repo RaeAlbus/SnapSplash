@@ -37,8 +37,11 @@ public class TakePictureTEST : MonoBehaviour
             }
             else
             {
-                LevelManager.Instance.UsePlayerUI();
-                cameraEquipped = false;
+                if(!LevelManager.isPaused)
+                {
+                    LevelManager.Instance.UsePlayerUI();
+                    cameraEquipped = false;
+                }
             }
 
             if (cameraEquipped)

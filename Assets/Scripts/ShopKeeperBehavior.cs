@@ -46,9 +46,6 @@ public class ShopKeeperBehavior : MonoBehaviour
             // Reverts back to idle animation
             anim.SetInteger("animState", 0);
             inShop = false;
-
-            // Starts outro dialouge
-            ShopKeeperUI.Instance.ExitDialouge();
         }
     }
 

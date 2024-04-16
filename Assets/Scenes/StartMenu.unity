@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 398848630}
   - component: {fileID: 398848629}
   m_Layer: 5
-  m_Name: CreditsText
+  m_Name: ControlsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,7 +698,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -52.8}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 750, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &398848629
@@ -725,15 +725,17 @@ MonoBehaviour:
     them to the shop! Here''s how:
 
 
-    ''E'' to interact (Anchors/Shopkeeper)
+    ''P'' to pause/unpause
 
-    ''WASD/Arrow
-    Keys'' to move
+    ''E'' to interact
+    (Anchors/Shopkeeper)
 
-    ''Hold Right-Mouse'' to aim camera
+    ''WASD/Arrow Keys'' to move
 
-    ''Click Left-Mouse''
-    to take photo
+    ''Hold Right-Mouse''
+    to aim camera
+
+    ''Click Left-Mouse'' to take photo
 
 '
   m_isRightToLeft: 0
@@ -762,8 +764,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     Transform playerBody;
 
-    public float mouseSensitivity = 175f;
+    public static float mouseSensitivity = 175f;
 
     float pitch = 0;
 
@@ -17,6 +17,8 @@ public class CameraController : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        PlayerPrefs.GetInt("mouseSensitivity", 175);
     }
 
     // Update is called once per frame
@@ -36,5 +38,11 @@ public class CameraController : MonoBehaviour
             pitch = Mathf.Clamp(pitch, -90f, 90f);
             transform.localRotation = Quaternion.Euler(pitch, 0, 0);
         }
+    }
+
+    public static void UpdateMouseSensitivity(int newSensitivity)
+    {
+        PlayerPrefs.SetInt("mouseSensitivity", newSensitivity);
+        mouseSensitivity = newSensitivity;
     }
 }

@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
     public static int storageLeft;
 
     // Money the player has earned from selling fish
-    public static float money = 10000;
+    public static float money;
 
     // Current Maximum depth player can go to
     public static float maxDepth;
@@ -59,6 +59,9 @@ public class LevelManager : MonoBehaviour
 
     // Current depth of player at this second 
     private float currentDepth;
+
+    // Whether the game is paused
+    public static bool isPaused;
 
     // References to UI Elements
     [Header("UI Elements")]
@@ -76,6 +79,7 @@ public class LevelManager : MonoBehaviour
     public Canvas playerCanvas;
     public Canvas cameraCanvas;
     public Canvas surfaceCanvas;
+    public Canvas pauseCanvas;
 
     public static GameObject player;
     [Header("Spawnpoints")]
@@ -116,8 +120,14 @@ public class LevelManager : MonoBehaviour
             UpdateAir();
             UpdateDepth();
         }
+
         UpdateInteractableTooltip();
         UpdateUI();
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            PauseGame();
+        }
     }
 
     //----------------------------------------------------SCENE SWITCHING FUNCTIONALITY----------------------------------------------
@@ -415,6 +425,7 @@ public class LevelManager : MonoBehaviour
 
         playerCanvas.GetComponent<Canvas>().enabled = false;
         surfaceCanvas.GetComponent<Canvas>().enabled = false;
+        pauseCanvas.GetComponent<Canvas>().enabled = false;
     }
 
     public void UsePlayerUI()
@@ -423,6 +434,7 @@ public class LevelManager : MonoBehaviour
 
         cameraCanvas.GetComponent<Canvas>().enabled = false;
         surfaceCanvas.GetComponent<Canvas>().enabled = false;
+        pauseCanvas.GetComponent<Canvas>().enabled = false;
     }
 
     public void UseSurfaceUI()
@@ -431,6 +443,29 @@ public class LevelManager : MonoBehaviour
 
         cameraCanvas.GetComponent<Canvas>().enabled = false;
         playerCanvas.GetComponent<Canvas>().enabled = false;
+        pauseCanvas.GetComponent<Canvas>().enabled = false;
+    }
+
+    public void SwitchPauseMenu(bool isPaused)
+    {   
+
+        if(isPaused)
+        {
+            pauseCanvas.GetComponent<Canvas>().enabled = true;
+
+            surfaceCanvas.GetComponent<Canvas>().enabled = false;
+            cameraCanvas.GetComponent<Canvas>().enabled = false;
+            playerCanvas.GetComponent<Canvas>().enabled = false;
+        } 
+        else if(!isDiving)
+        {
+            UseSurfaceUI();
+        }
+        else
+        {
+            UsePlayerUI();
+        }
+
     }
 
     //----------------------------------------------------PLAYER VALUES FUNCTIONALITY----------------------------------------------
@@ -452,4 +487,25 @@ public class LevelManager : MonoBehaviour
         airLeft -= airLoss;
     }
 
+    void PauseGame()
+    {
+        if(LevelManager.isPaused)
+        {
+            isPaused = false;
+            Time.timeScale = 1f;
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        } 
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            isPaused = true;
+            Time.timeScale = 0f;
+        }
+
+        SwitchPauseMenu(isPaused);
+    }
 }

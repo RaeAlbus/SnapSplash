@@ -100,6 +100,8 @@ public class TakePictureTEST : MonoBehaviour
 
         flashEffect.StartFlash();
 
+        bool captureSoundPlayed = false;
+
         foreach (GameObject objectToTakePictureOf in LevelManager.fishInScene)
         {
             FishController fishController = objectToTakePictureOf.GetComponent<FishController>();
@@ -135,6 +137,12 @@ public class TakePictureTEST : MonoBehaviour
                         Debug.Log("Fish hit! Value: " + fishValue);
                         fishController.MarkAsPhotographed(); // Mark the fish as photographed
                         PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
+
+                        if (!captureSoundPlayed)
+                        {
+                            SoundManager.Instance.PlayFishCaptureSFX();
+                            captureSoundPlayed = true;
+                        }
                     }
                 }
             }
@@ -171,6 +179,12 @@ public class TakePictureTEST : MonoBehaviour
                             Debug.Log("Shark hit! Value: " + sharkValue);
                             sharkAI.MarkAsPhotographed(); // Mark the shark as photographed
                             PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
+
+                            if (!captureSoundPlayed)
+                            {
+                                SoundManager.Instance.PlayFishCaptureSFX();
+                                captureSoundPlayed = true;
+                            }
                         }
                     }
                 }

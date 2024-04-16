@@ -68,7 +68,6 @@ public class FishController : MonoBehaviour
     public void MarkAsPhotographed()
     {
         photographed = true;
-        PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
     }
 
     public bool IsPhotographed()

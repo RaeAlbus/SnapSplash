@@ -134,6 +134,7 @@ public class TakePictureTEST : MonoBehaviour
                         LevelManager.Instance.addFishValue(fishValue);
                         Debug.Log("Fish hit! Value: " + fishValue);
                         fishController.MarkAsPhotographed(); // Mark the fish as photographed
+                        PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
                     }
                 }
             }
@@ -169,6 +170,7 @@ public class TakePictureTEST : MonoBehaviour
                             LevelManager.Instance.addFishValue(sharkValue);
                             Debug.Log("Shark hit! Value: " + sharkValue);
                             sharkAI.MarkAsPhotographed(); // Mark the shark as photographed
+                            PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
                         }
                     }
                 }
@@ -181,6 +183,8 @@ public class TakePictureTEST : MonoBehaviour
             if (Vector3.Magnitude(directionToObject) < 30)
             {
                 LevelManager.squidBehavior.StartChase();
+                LevelManager.Instance.addFishValue(4000);
+                PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
             }
         }
     }

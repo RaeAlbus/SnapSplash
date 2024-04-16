@@ -10,6 +10,7 @@ public class FlashlightBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && LevelManager.hasFlashlight)
         {
+            SoundManager.Instance.PlayFlashlightSFX();
             flashlight.enabled = !flashlight.enabled;
         }  
     }

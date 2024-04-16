@@ -159,6 +159,7 @@ public class SharkAI : MonoBehaviour
         {
             int damageAmount = Random.Range(1, 4);
             LevelManager.Instance.LoseAir(damageAmount);
+            SoundManager.Instance.PlaySharkAttackSFX();
         }
     }
 

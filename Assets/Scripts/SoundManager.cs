@@ -23,6 +23,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip surfaceBGMusic;
     public AudioClip oceanBubbleSFX;
     public AudioClip sandFootstepsSFX;
+    public AudioClip sharkAttackSFX;
+    public AudioClip flashlightSFX;
 
     [Header("Audio Sources")]
     AudioSource bgMusicSource;
@@ -160,5 +162,15 @@ public class SoundManager : MonoBehaviour
     public void PlayOceanBubbleSFX()
     {
         oneShotSource.PlayOneShot(oceanBubbleSFX);
+    }
+
+    public void PlaySharkAttackSFX()
+    {
+        oneShotSource.PlayOneShot(sharkAttackSFX);
+    }
+
+    public void PlayFlashlightSFX()
+    {
+        oneShotSource.PlayOneShot(flashlightSFX);
     }
 }

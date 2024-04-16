@@ -100,6 +100,8 @@ public class TakePictureTEST : MonoBehaviour
 
         flashEffect.StartFlash();
 
+        bool captureSoundPlayed = false;
+
         foreach (GameObject objectToTakePictureOf in LevelManager.fishInScene)
         {
             FishController fishController = objectToTakePictureOf.GetComponent<FishController>();
@@ -132,10 +134,15 @@ public class TakePictureTEST : MonoBehaviour
                             fishValue *= .5f;
                         }
                         LevelManager.Instance.addFishValue(fishValue);
-                        SoundManager.Instance.PlayFishCaptureSFX();
                         Debug.Log("Fish hit! Value: " + fishValue);
                         fishController.MarkAsPhotographed(); // Mark the fish as photographed
                         PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
+
+                        if (!captureSoundPlayed)
+                        {
+                            SoundManager.Instance.PlayFishCaptureSFX();
+                            captureSoundPlayed = true;
+                        }
                     }
                 }
             }
@@ -169,10 +176,15 @@ public class TakePictureTEST : MonoBehaviour
                                 sharkValue *= .5f;
                             }
                             LevelManager.Instance.addFishValue(sharkValue);
-                            SoundManager.Instance.PlayFishCaptureSFX();
                             Debug.Log("Shark hit! Value: " + sharkValue);
                             sharkAI.MarkAsPhotographed(); // Mark the shark as photographed
                             PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
+
+                            if (!captureSoundPlayed)
+                            {
+                                SoundManager.Instance.PlayFishCaptureSFX();
+                                captureSoundPlayed = true;
+                            }
                         }
                     }
                 }

@@ -13,11 +13,6 @@ public class ShopKeeperUI : MonoBehaviour
     // Read-only instant of ShopKeeperUI to access from other scripts
     public static ShopKeeperUI Instance => _instance;
 
-    // Text Scenes
-    public string[] initTexts;
-
-    public string[] exitTexts;
-
     // Accessibles for the UI
     public TextMeshProUGUI dialougeText;
     public Canvas dialougeCanvas;
@@ -39,13 +34,12 @@ public class ShopKeeperUI : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //dialougeCanvas.gameObject.SetActive(false);
+        dialougeCanvas.gameObject.SetActive(false);
 
     }
 
     public void InitDialouge()
     {
-        Debug.Log("init dialouge");
         // Show cursor and show dialouge box
         SetMouseFree(true);
         dialougeCanvas.gameObject.SetActive(true);
@@ -54,6 +48,8 @@ public class ShopKeeperUI : MonoBehaviour
         clickToContinueText.gameObject.SetActive(false);
         sellBtn.gameObject.SetActive(false);
         buyBtn.gameObject.SetActive(false);
+
+        string[] initTexts = {"Hello! Welcome to my shop!", "What can I do ya for today?"};
 
         // Start dialouge coroutine
         StartCoroutine(DisplayTextsSequentially(initTexts, 0, () =>

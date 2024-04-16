@@ -9,6 +9,7 @@ public class Shop : MonoBehaviour
 {
     // Button prefabs of all items to display in shop
     public GameObject itemPrefab;
+    public GameObject soldOutItemPrefab;
 
     // Everything this shop has ever sold/is selling
     public List<Item> stock = new List<Item>();
@@ -74,18 +75,17 @@ public class Shop : MonoBehaviour
     {
         foreach (Item item in stock)
         {
-            if (item.name == name && !item.hasBought)
+            if (item.name == name)
             {
                 // Gets reference to UI button for the item
                 buttonObject = GameObject.Find(item.name);
                 Button button = buttonObject.GetComponent<Button>();
 
-                if(item.price <= LevelManager.money)
+                if(item.price <= LevelManager.money && !item.hasBought)
                 {
                     // Buys the item
                     SoundManager.Instance.PlayCashSFX();
                     LevelManager.money -= item.price;
-                    item.hasBought = true;
                     UpdateValues(item);
 
                     // Makes UI button of item green to display it has been bought
@@ -97,9 +97,13 @@ public class Shop : MonoBehaviour
                     Invoke("ResetButton", 1.0f);
                     return;
                 }
+                else if(item.hasBought)
+                {
+                    SoldOut(item);
+                } 
                 else
                 {
-                    // Can not buy the item due to insufficent cash
+                    // Can not buy the item due to insufficent cash or has bought already
                     SoundManager.Instance.PlayNoStorageSFX();
 
                     // Makes UI button of item red to display it has not been bought
@@ -113,7 +117,7 @@ public class Shop : MonoBehaviour
                 }
 
                 break;
-            }
+            } 
         }
 
     }
@@ -135,7 +139,6 @@ public class Shop : MonoBehaviour
     {
         string[] itemVals = item.name.Split('\n');
         string name = itemVals[0];
-        Debug.Log(name);
 
         switch (name)
         {
@@ -149,6 +152,10 @@ public class Shop : MonoBehaviour
                 break;
 
             case "Depth Gauge":
+                if(LevelManager.maxDepth <= -100)
+                {
+                    item.hasBought = true;
+                }
                 LevelManager.maxDepth -= 40;
                 break;
 
@@ -159,11 +166,32 @@ public class Shop : MonoBehaviour
             case "Flashlight":
                 LevelManager.hasFlashlight = true;
                 item.hasBought = true;
+
                 break;
 
             default:
                 break;
         }
+    }
+
+    public void SoldOut(Item item)
+    {
+        Transform panelTransform = transform.Find("ShopBG");
+
+        // Gets reference to UI button for the item
+        buttonObject = GameObject.Find(item.name);
+        Button button = buttonObject.GetComponent<Button>();
+        Vector3 btnPos = button.transform.position;
+
+        GameObject soldOutButtonInstance = Instantiate(soldOutItemPrefab, btnPos, Quaternion.identity);
+        soldOutButtonInstance.name = item.name;
+        soldOutButtonInstance.transform.SetParent(panelTransform);
+
+        TextMeshProUGUI nameText = soldOutButtonInstance.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        nameText.text = item.name;
+
+        TextMeshProUGUI priceText = soldOutButtonInstance.transform.Find("Price").GetComponent<TextMeshProUGUI>();
+        priceText.text = "$---";
     }
 
 }

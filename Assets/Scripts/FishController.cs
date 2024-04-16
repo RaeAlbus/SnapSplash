@@ -5,7 +5,7 @@ using UnityEngine;
 public class FishController : MonoBehaviour
 {
 
-    public float fishValue = 100.0f;
+    public int fishValue = 100;
 
     public float minPauseDuration = 5.0f;
 

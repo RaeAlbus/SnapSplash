@@ -61,6 +61,7 @@ public class ShopKeeperBehavior : MonoBehaviour
             SoundManager.Instance.PlayCashSFX();
             LevelManager.storageLeft = LevelManager.totalStorage;
             LevelManager.money = LevelManager.money + LevelManager.totalFishValue;
+            PlayerPrefs.SetFloat("CoinsCollected", PlayerPrefs.GetFloat("CoinsCollected", 0) + LevelManager.totalFishValue);
             LevelManager.totalFishValue = 0;
         } 
         else 

@@ -104,7 +104,6 @@ public class TakePictureTEST : MonoBehaviour
         {
             FishController fishController = objectToTakePictureOf.GetComponent<FishController>();
             SharkAI sharkAI = objectToTakePictureOf.GetComponent<SharkAI>();
-            SquidBehavior squidBehavior = objectToTakePictureOf.GetComponent<SquidBehavior>();
 
             if (fishController != null && !fishController.IsPhotographed())
             {
@@ -136,6 +135,7 @@ public class TakePictureTEST : MonoBehaviour
                         SoundManager.Instance.PlayFishCaptureSFX();
                         Debug.Log("Fish hit! Value: " + fishValue);
                         fishController.MarkAsPhotographed(); // Mark the fish as photographed
+                        PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
                     }
                 }
             }
@@ -172,6 +172,7 @@ public class TakePictureTEST : MonoBehaviour
                             SoundManager.Instance.PlayFishCaptureSFX();
                             Debug.Log("Shark hit! Value: " + sharkValue);
                             sharkAI.MarkAsPhotographed(); // Mark the shark as photographed
+                            PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
                         }
                     }
                 }
@@ -184,6 +185,8 @@ public class TakePictureTEST : MonoBehaviour
             if (Vector3.Magnitude(directionToObject) < 30)
             {
                 LevelManager.squidBehavior.StartChase();
+                LevelManager.Instance.addFishValue(4000);
+                PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
             }
         }
     }

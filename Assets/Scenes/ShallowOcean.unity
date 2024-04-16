@@ -14977,6 +14977,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Anchor
       objectReference: {fileID: 0}
+    - target: {fileID: 5644440624971171419, guid: 4a28789169befde4398c49c2fd7dff92, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     - target: {fileID: 6135791891714767127, guid: 4a28789169befde4398c49c2fd7dff92, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01

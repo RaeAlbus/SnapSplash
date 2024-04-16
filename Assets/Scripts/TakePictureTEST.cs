@@ -133,6 +133,7 @@ public class TakePictureTEST : MonoBehaviour
                             fishValue *= .5f;
                         }
                         LevelManager.Instance.addFishValue(fishValue);
+                        SoundManager.Instance.PlayFishCaptureSFX();
                         Debug.Log("Fish hit! Value: " + fishValue);
                         fishController.MarkAsPhotographed(); // Mark the fish as photographed
                     }
@@ -168,6 +169,7 @@ public class TakePictureTEST : MonoBehaviour
                                 sharkValue *= .5f;
                             }
                             LevelManager.Instance.addFishValue(sharkValue);
+                            SoundManager.Instance.PlayFishCaptureSFX();
                             Debug.Log("Shark hit! Value: " + sharkValue);
                             sharkAI.MarkAsPhotographed(); // Mark the shark as photographed
                         }

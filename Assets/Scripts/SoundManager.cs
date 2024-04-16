@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip sandFootstepsSFX;
     public AudioClip sharkAttackSFX;
     public AudioClip flashlightSFX;
+    public AudioClip[] fishCaptureSFX;
 
     [Header("Audio Sources")]
     AudioSource bgMusicSource;
@@ -172,5 +173,10 @@ public class SoundManager : MonoBehaviour
     public void PlayFlashlightSFX()
     {
         oneShotSource.PlayOneShot(flashlightSFX);
+    }
+
+    public void PlayFishCaptureSFX()
+    {
+        oneShotSource.PlayOneShot(fishCaptureSFX[Random.Range(0, fishCaptureSFX.Length)]);
     }
 }

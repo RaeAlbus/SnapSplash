@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.13741545, g: 0.14194374, b: 0.1509434, a: 1}
+  m_FogColor: {r: 0, g: 0.12191718, b: 0.13207549, a: 1}
   m_FogMode: 2
   m_FogDensity: 0.17
   m_LinearFogStart: 0
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 829c059ff592faa4fa50da7376c5345d, type: 2}
   m_LightingSettings: {fileID: 1018083321}
 --- !u!196 &4
 NavMeshSettings:
@@ -4263,79 +4263,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4071247127390466021, guid: d00e8a8a7e952a5479c117a1c996aeb9, type: 3}
   m_PrefabInstance: {fileID: 1323626944}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &381690685
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1331059294925547297, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -57.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -20.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7093576
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.2864568
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.59716123
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.24114908
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -43.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 80.184
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704683955033139298, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7651845237561092619, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
-      propertyPath: m_Name
-      value: Squid
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 07619fd72e7feec45be31c590af9a795, type: 3}
 --- !u!1001 &391211656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23331,7 +23258,6 @@ SceneRoots:
   - {fileID: 1485508641}
   - {fileID: 1992608420}
   - {fileID: 2061870758}
-  - {fileID: 381690685}
   - {fileID: 1882702740}
   - {fileID: 561914154}
   - {fileID: 1665849315}

@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         characterController = GetComponent<CharacterController>();
         rb = GetComponentInChildren<Rigidbody>();
+        movementSpeedUnderwater = 20f;
     }
 
     void Update()

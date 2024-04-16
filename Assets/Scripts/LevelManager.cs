@@ -91,9 +91,13 @@ public class LevelManager : MonoBehaviour
     // fish in current scene
     public static GameObject[] fishInScene;
 
+    // squid
+    public static SquidBehavior squidBehavior;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        squidBehavior = transform.parent.gameObject.GetComponentInChildren<SquidBehavior>();
 
         InitGame();
 
@@ -119,6 +123,11 @@ public class LevelManager : MonoBehaviour
 
     void TeleportPlayer(Transform loc)
     {
+        if (squidBehavior)
+        {
+            Vector3 offset = squidBehavior.transform.position - transform.position;
+            squidBehavior.transform.position = loc.position + offset;
+        }
         CharacterController c = player.GetComponent<CharacterController>();
         c.enabled = false;
         player.transform.position = loc.position;
@@ -169,6 +178,14 @@ public class LevelManager : MonoBehaviour
         SoundManager.Instance.PlayWalkingSFX();
 
         UseSurfaceUI();
+
+        Vector3 currentRotation = player.transform.rotation.eulerAngles;
+        // Set the Z rotation component to 0
+        currentRotation.z = 0f;
+        // Set the object's rotation to the modified Euler angles
+        player.transform.rotation = Quaternion.Euler(currentRotation);
+
+        squidBehavior.EnterSurface();
     }
 
     void InitMidLevelOcean(bool topSpawn)
@@ -205,6 +222,7 @@ public class LevelManager : MonoBehaviour
         LoadDeepOcean();
         currentLevel = Level.DeepOcean;
         Invoke("FindFish", 0.5f);
+        squidBehavior.EnterDeepOcean();
     }
 
     public void LoadUpLevelOcean()
@@ -243,6 +261,14 @@ public class LevelManager : MonoBehaviour
         storageLeft = totalStorage;
         Invoke("SwitchScene", 1);
         
+    }
+
+    public void LevelLost()
+    {
+        airLeft = 0;
+        playerCanvas.GetComponent<Canvas>().enabled = false;
+        isLevelLost = true;
+        LevelOver();
     }
 
     public void SwitchScene()

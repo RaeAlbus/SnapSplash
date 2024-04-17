@@ -93,7 +93,7 @@ public class ShopKeeperUI : MonoBehaviour
 
     public void BuyItemDialouge()
     {
-        string[] notSoldDialouge = {"Great! You came to the right place"}; //, "I'll open up my shop, just click on what catches your eye"};
+        string[] notSoldDialouge = {"Great! You came to the right place", "I'll open up my shop, just click on what catches your eye"};
 
         StartCoroutine(DisplayTextsSequentially(notSoldDialouge, 0, () =>
         {

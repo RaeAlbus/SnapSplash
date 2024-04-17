@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         rb = GetComponentInChildren<Rigidbody>();
-        movementSpeedUnderwater = 20f;
     }
 
     void Update()

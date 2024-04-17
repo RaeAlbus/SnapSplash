@@ -77,28 +77,6 @@ public class TakePictureTEST : MonoBehaviour
     void CapturePic()
     {
         LevelManager.storageLeft -= 1;
-        /*
-        Debug.Log("Pic taken");
-        // Cast a sphere along the line from the camera
-        RaycastHit[] hits = Physics.SphereCastAll(Camera.main.transform.position, raycastWidth, Camera.main.transform.forward, raycastDistance);
-
-        // Process the hits
-        foreach (RaycastHit hit in hits)
-        {
-            // Handle the hit
-            if (hit.collider.CompareTag("Fish"))
-            {
-                FishController fish = hit.collider.GetComponent<FishController>();
-                if (fish != null)
-                {
-                    float fishValue = fish.fishValue;
-                    //LevelManager.Instance.addFishValue(fishValue);
-                    Debug.Log("Fish hit! Value: " + fishValue);
-                    //Debug.Log("Pics left: " + LevelManager.storageLeft);
-                }
-            }
-        }
-        */
         SoundManager.Instance.PlayCameraSFX();
 
         flashEffect.StartFlash();
@@ -137,7 +115,6 @@ public class TakePictureTEST : MonoBehaviour
                             fishValue *= .5f;
                         }
                         LevelManager.Instance.addFishValue(fishValue);
-                        Debug.Log("Fish hit! Value: " + fishValue);
                         fishController.MarkAsPhotographed(); // Mark the fish as photographed
                         PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
 
@@ -179,7 +156,6 @@ public class TakePictureTEST : MonoBehaviour
                                 sharkValue *= .5f;
                             }
                             LevelManager.Instance.addFishValue(sharkValue);
-                            Debug.Log("Shark hit! Value: " + sharkValue);
                             sharkAI.MarkAsPhotographed(); // Mark the shark as photographed
                             PlayerPrefs.SetInt("FishPhotographed", PlayerPrefs.GetInt("FishPhotographed", 0) + 1);
 

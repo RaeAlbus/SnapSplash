@@ -27,8 +27,7 @@ public class LevelManager : MonoBehaviour
 
     // The total amount of air the player has for this level at the start
     [Header("Level Info")]
-    //TODO: Change this to 30f
-    public static float totalAir = 80f;
+    public static float totalAir = 30f;
 
     // Amount of air left at this second in level
     public static float airLeft;
@@ -67,6 +66,7 @@ public class LevelManager : MonoBehaviour
     [Header("UI Elements")]
     public Slider airUI;
     public Text warningText;
+    public Text underwaterTooltip;
     public Text surfaceTooltip;
     public Text storageUI;
     public Text storageUICamera;
@@ -408,14 +408,14 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                warningText.gameObject.SetActive(true);
-                warningText.text = "Press 'E' to interact";
+                underwaterTooltip.gameObject.SetActive(true);
+                underwaterTooltip.text = "Press 'E' to interact";
             }
         }
         else
         {
             surfaceTooltip.gameObject.SetActive(false);
-            warningText.gameObject.SetActive(false);
+            underwaterTooltip.gameObject.SetActive(false);
         }
     }
 

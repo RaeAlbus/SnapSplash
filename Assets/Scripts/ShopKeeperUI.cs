@@ -41,7 +41,7 @@ public class ShopKeeperUI : MonoBehaviour
     public void InitDialouge()
     {
         // Show cursor and show dialouge box
-      //  SetMouseFree(true);
+        SetMouseFree(true);
         dialougeCanvas.gameObject.SetActive(true);
 
         // Hide these btns until the right dialouge prompts them on
